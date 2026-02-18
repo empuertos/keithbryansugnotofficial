@@ -1,83 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keith Bryan Sugnot | Event Singer</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Keith Bryan Sugnot | Official Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff}
+header{padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298)}
+header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff}
+section{padding:40px 20px;max-width:1000px;margin:auto}
+h1,h2{margin:10px 0}
+.social a{display:inline-block;margin:8px;padding:10px 16px;border:1px solid #555;border-radius:6px;color:#fff;text-decoration:none}
+.social a:hover{background:#2a5298}
+iframe{width:100%;height:315;border-radius:10px;border:none}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px}
+.gallery img{width:100%;border-radius:10px}
+form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px}
+form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px}
+footer{text-align:center;padding:20px;background:#111;color:#aaa}
+.badge{background:red;color:#fff;padding:4px 8px;border-radius:5px;font-size:12px}
+</style>
 </head>
 <body>
-    <!-- HEADER / HERO -->
-    <header>
-        <div class="hero-image-container">
-            <img src="images/main_photo.jpg" alt="Keith Bryan Sugnot" id="hero-photo">
-            <div class="hero-overlay">
-                <h1>Keith Bryan Sugnot</h1>
-                <p>Event Singer</p>
-                <p class="bio">Keith Bryan Sugnot is a passionate Filipino singer and live performer known for heartfelt covers and engaging live sessions. Blending emotion, melody, and connection with his audience, Keith performs popular songs while bringing his own style and soul to every performance. Support the music, join the live shows, and be part of the journey.</p>
-                <div class="social-icons">
-                    <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">YouTube</a>
-                    <a href="https://www.instagram.com/kentotieeee" target="_blank">Instagram</a>
-                    <a href="https://www.tiktok.com/@kenken20.03?_r=1&_t=ZS-9410yWvP3Le" target="_blank">TikTok</a>
-                    <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank">Facebook</a>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- LIVE STREAM -->
-    <section id="live">
-        <h2>Live Now</h2>
-        <div class="live-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/live_stream?channel=keithbryansugnotofficial" title="YouTube Live" frameborder="0" allowfullscreen></iframe>
-            <p>Or <a href="https://www.tiktok.com/@kenken20.03?_r=1&_t=ZS-9410yWvP3Le" target="_blank">Watch Live on TikTok</a></p>
-        </div>
-    </section>
+<header>
+<img src="keith.jpg" alt="Keith Bryan Sugnot">
+<h1>Keith Bryan Sugnot</h1>
+<h2>Event Singer • Live & Cover Songs</h2>
+<p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
+</header>
 
-    <!-- COVER SONGS -->
-    <section id="covers">
-        <h2>Cover Songs</h2>
-        <div class="cover-list">
-            <iframe width="300" height="169" src="https://www.youtube.com/embed/?listType=user_uploads&list=keithbryansugnotofficial" title="YouTube Covers" frameborder="0" allowfullscreen></iframe>
-            <iframe width="300" height="169" src="https://www.tiktok.com/embed/@kenken20.03" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </section>
+<section>
+<h2>🔴 Live Performance</h2>
+<div id="liveStatus">Checking live status...</div>
+<iframe id="ytPlayer"></iframe>
+</section>
 
-    <!-- DONATION -->
-    <section id="donate">
-        <h2>Support Keith</h2>
-        <p>Coming Soon: Donate via GCash / Maya / QR Code</p>
-        <div class="donation-placeholder">
-            <img src="images/qrcode-placeholder.png" alt="QR Code Placeholder">
-        </div>
-    </section>
+<section>
+<h2>🌐 Social Media</h2>
+<div class="social">
+<a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">YouTube</a>
+<a href="https://www.tiktok.com/@kenken20.03" target="_blank">TikTok</a>
+<a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank">Facebook</a>
+<a href="https://www.instagram.com/kentotieeee" target="_blank">Instagram</a>
+</div>
+</section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Phone: 0994 683 8715 / 0955 297 8454</p>
-        <p>Email: <a href="mailto:sugnotk@gmail.com">sugnotk@gmail.com</a></p>
-        <div class="social-icons">
-            <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">YouTube</a>
-            <a href="https://www.instagram.com/kentotieeee" target="_blank">Instagram</a>
-            <a href="https://www.tiktok.com/@kenken20.03?_r=1&_t=ZS-9410yWvP3Le" target="_blank">TikTok</a>
-            <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank">Facebook</a>
-        </div>
-    </section>
+<section>
+<h2>💸 Support / Donation</h2>
+<p><strong>COMING SOON</strong></p>
+<p>GCash • Maya • QR Code will be available soon.</p>
+</section>
 
-    <!-- PHOTO GALLERY / AUTO SLIDER -->
-    <section id="gallery">
-        <h2>Gallery</h2>
-        <div class="gallery-container" id="gallery-container">
-            <img src="images/main_photo.jpg" alt="Keith Bryan Sugnot">
-            <!-- Add more photos here -->
-        </div>
-    </section>
+<section>
+<h2>📩 Booking / Contact</h2>
+<p>Email: <strong>sugnotk@gmail.com</strong></p>
+<form action="https://formsubmit.co/sugnotk@gmail.com" method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="text" name="contact" placeholder="Contact Number" required>
+<input type="text" name="event" placeholder="Event Type">
+<textarea name="message" placeholder="Message"></textarea>
+<button type="submit">Send Inquiry</button>
+</form>
+</section>
 
-    <footer>
-        <p>&copy; 2026 Keith Bryan Sugnot. All rights reserved.</p>
-    </footer>
+<section>
+<h2>🖼 Gallery</h2>
+<div class="gallery">
+<img src="keith.jpg">
+<img src="keith2.jpg">
+<img src="keith3.jpg">
+</div>
+</section>
 
-    <script src="script.js"></script>
+<footer>
+© 2026 Keith Bryan Sugnot. All rights reserved.
+</footer>
+
+<script>
+const channelId = "UCefBEmdYeUm65g9LXWkTFrw";
+const fallbackVideo = "dQw4w9WgXcQ"; // palitan ng cover song ID mo
+
+fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)
+.then(res => res.text())
+.then(data => {
+  const videoId = data.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1] || fallbackVideo;
+  document.getElementById("ytPlayer").src = "https://www.youtube.com/embed/" + videoId;
+  document.getElementById("liveStatus").innerHTML = "Latest performance";
+});
+</script>
+
 </body>
 </html>

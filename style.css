@@ -1,0 +1,91 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body & Font */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #f1f1f1;
+    line-height: 1.6;
+}
+
+/* Header / Hero */
+header {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.hero-image-container {
+    position: relative;
+}
+.hero-image-container img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+.hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.hero-overlay h1 {
+    font-size: 3em;
+}
+.hero-overlay p {
+    font-size: 1.2em;
+}
+.social-icons a {
+    margin: 0 10px;
+    color: #f1f1f1;
+    text-decoration: none;
+    font-weight: bold;
+}
+.social-icons a:hover {
+    color: #ff4081;
+}
+
+/* Sections */
+section {
+    padding: 50px 20px;
+    text-align: center;
+}
+.cover-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.cover-list iframe {
+    max-width: 100%;
+}
+
+/* Donation */
+.donation-placeholder img {
+    width: 200px;
+}
+
+/* Gallery */
+.gallery-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 20px 0;
+}
+.gallery-container img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #1e1e1e;
+}

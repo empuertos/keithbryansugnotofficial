@@ -25,6 +25,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 </head>
 <body>
 
+<!-- HEADER IMAGE (STATIC) -->
 <header>
 <img src="main_photo.jpg" alt="Keith Bryan Sugnot">
 <h1>Keith Bryan Sugnot</h1>
@@ -32,12 +33,14 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 <p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
 </header>
 
+<!-- LATEST VIDEO SECTION -->
 <section>
 <h2>🔴 Latest Performance</h2>
 <div id="liveStatus">Loading latest video...</div>
 <iframe id="ytPlayer" allowfullscreen></iframe>
 </section>
 
+<!-- SOCIAL MEDIA LINKS -->
 <section>
 <h2>🌐 Social Media</h2>
 <div class="social">
@@ -48,12 +51,14 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 </div>
 </section>
 
+<!-- DONATION PLACEHOLDER -->
 <section>
 <h2>💸 Support / Donation</h2>
 <p><strong>COMING SOON</strong></p>
 <p>GCash • Maya • QR Code will be available soon.</p>
 </section>
 
+<!-- CONTACT FORM -->
 <section>
 <h2>📩 Booking / Contact</h2>
 <p>Email: <strong>sugnotk@gmail.com</strong></p>
@@ -66,12 +71,13 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 </form>
 </section>
 
+<!-- GALLERY SECTION (SLIDESHOW) -->
 <section>
 <h2>🖼 Gallery</h2>
 <div class="gallery" id="gallery">
-<img src="main_photo.jpg">
 <img src="keith2.jpg">
 <img src="keith3.jpg">
+<img src="keith4.jpg">
 </div>
 </section>
 
@@ -80,34 +86,31 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 </footer>
 
 <script>
-// 🔥 AUTO SLIDESHOW
-const images = document.querySelectorAll("#gallery img");
-let validImages = [];
+// 🔥 GALLERY SLIDESHOW
+const galleryImages = document.querySelectorAll("#gallery img");
+let validGallery = [];
 
-images.forEach(img=>{
-  img.onerror = ()=> img.remove();
-  img.onload = ()=> {
-    validImages.push(img);
-    if(validImages.length === 1){
-      img.classList.add("active");
-      startSlideshow();
-    }
+galleryImages.forEach(img => {
+  img.onerror = () => img.remove(); // remove broken images
+  img.onload = () => {
+    validGallery.push(img);
+    if(validGallery.length === 1) startGallerySlideshow();
   };
 });
 
-function startSlideshow(){
-  if(validImages.length <= 1) return;
+function startGallerySlideshow() {
+  if(validGallery.length <= 1) return;
   let index = 0;
-  setInterval(()=>{
-    validImages[index].classList.remove("active");
-    index = (index+1) % validImages.length;
-    validImages[index].classList.add("active");
-  },3000);
+  setInterval(() => {
+    validGallery[index].classList.remove("active");
+    index = (index + 1) % validGallery.length;
+    validGallery[index].classList.add("active");
+  }, 3000);
 }
 
-// 🔴 AUTO LATEST YOUTUBE VIDEO (No API needed)
+// 🔴 AUTO LATEST YOUTUBE VIDEO (No API key needed)
 const channelId = "UCefBEmdYeUm65g9LXWkTFrw";
-const fallbackVideo = "dQw4w9WgXcQ"; // replace with cover song if needed
+const fallbackVideo = "dQw4w9WgXcQ"; // default video
 const liveStatusEl = document.getElementById("liveStatus");
 const ytPlayer = document.getElementById("ytPlayer");
 

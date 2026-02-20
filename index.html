@@ -13,10 +13,6 @@ h1,h2{margin:10px 0;}
 #liveTabs{margin-bottom:15px;text-align:center;}
 #liveTabs button{padding:10px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;cursor:pointer;transition:0.3s;}
 #liveTabs button:hover{background:#1e3c72;}
-#nextVideoBtn{margin-top:10px;padding:10px 20px;background:#2a5298;color:#fff;border:none;border-radius:5px;cursor:pointer;}
-#nowPlayingContainer{overflow:hidden; white-space:nowrap; border-bottom:1px solid #444; margin:10px 0; padding:5px 0; text-align:center;}
-#nowPlaying{display:inline-block; padding-left:100%; animation: scrollTitle 15s linear infinite;}
-@keyframes scrollTitle { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 .social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
 .social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
 .social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
@@ -30,6 +26,16 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 .gallery img{width:100%;border-radius:10px;cursor:pointer;transition: transform 0.3s;}
 .gallery img:hover{transform:scale(1.05);}
 .audio-player{position:fixed;bottom:20px;left:20px;}
+
+/* Spinner & pulse */
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+@keyframes pulse{0%{transform:scale(1);opacity:1;}50%{transform:scale(1.1);opacity:0.8;}100%{transform:scale(1);opacity:1;}}
+#thumbCarousel::-webkit-scrollbar{height:6px;}
+#thumbCarousel::-webkit-scrollbar-thumb{background:#2a5298;border-radius:3px;}
+#thumbCarousel div{flex:0 0 auto;width:120px;cursor:pointer;text-align:center;}
+#thumbCarousel img{width:100%;border-radius:8px;transition: transform 0.3s;}
+#thumbCarousel img:hover{transform:scale(1.05);}
+.thumb-title{font-size:12px;color:#fff;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 </style>
 </head>
 <body>
@@ -49,13 +55,61 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   <button onclick="showLive('tiktok')">TikTok</button>
 </div>
 
-<!-- Scrolling Now Playing Title -->
-<div id="nowPlayingContainer">
-  <span id="nowPlaying">Loading video...</span>
+<!-- Video Wrapper -->
+<div id="videoWrapper" style="position:relative; width:100%; max-width:1000px; margin:auto;">
+  <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+
+  <!-- Overlay -->
+  <div id="videoPreloader" style="
+    display:none;
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.5);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    border-radius:10px;
+  ">
+    <div style="
+      width:50px; height:50px;
+      border:5px solid #fff;
+      border-top-color:#2a5298;
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+      margin-bottom:10px;
+    "></div>
+    <div id="liveOverlayText" style="
+      display:none;
+      font-weight:bold;
+      font-size:24px;
+      color:red;
+      text-shadow:0 0 8px rgba(255,0,0,0.8);
+      animation:pulse 1s infinite;
+    ">🔴 LIVE</div>
+  </div>
 </div>
 
-<iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
-<button id="nextVideoBtn" onclick="nextPopularVideo()">Next Video ▶</button>
+<!-- LIVE Banner -->
+<div id="liveBanner" style="
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:bold;
+  color:red;
+">🔴 LIVE Now on YouTube!</div>
+
+<!-- Thumbnail carousel with arrows -->
+<div style="position:relative; max-width:1000px; margin:auto; padding-top:10px;">
+  <button id="prevThumb" style="
+    position:absolute; left:0; top:50%; transform:translateY(-50%);
+    z-index:10; background:rgba(0,0,0,0.5); border:none; color:#fff;
+    padding:8px 12px; border-radius:5px; cursor:pointer;">&#10094;</button>
+  <button id="nextThumb" style="
+    position:absolute; right:0; top:50%; transform:translateY(-50%);
+    z-index:10; background:rgba(0,0,0,0.5); border:none; color:#fff;
+    padding:8px 12px; border-radius:5px; cursor:pointer;">&#10095;</button>
+  <div id="thumbCarousel" style="display:flex; overflow-x:auto; gap:10px; scroll-behavior:smooth; padding:0 40px;"></div>
+</div>
 </section>
 
 <section style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:10px; text-align:center;">
@@ -89,58 +143,21 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🌐 Social Media</h2>
 <div class="social-cards">
-<!-- YouTube -->
 <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
-  <svg viewBox="0 0 24 24" width="50" height="50">
-    <rect width="24" height="24" rx="4" ry="4" fill="#FF0000"/>
-    <polygon points="9,8 16,12 9,16" fill="#fff"/>
-  </svg>
-  <div>
-    <h3>YouTube</h3>
-    <p id="ytSubs">Loading...</p>
-  </div>
+  <svg viewBox="0 0 24 24" width="50" height="50"><rect width="24" height="24" rx="4" ry="4" fill="#FF0000"/><polygon points="9,8 16,12 9,16" fill="#fff"/></svg>
+  <div><h3>YouTube</h3><p id="ytSubs">Loading...</p></div>
 </a>
-<!-- TikTok -->
 <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
-  <svg viewBox="0 0 24 24" width="50" height="50">
-    <defs>
-      <linearGradient id="tiktokGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#69C9D0"/>
-        <stop offset="50%" stop-color="#EE1D52"/>
-        <stop offset="100%" stop-color="#000"/>
-      </linearGradient>
-    </defs>
-    <path d="M12 2v16c-4-0.5-7-3-7-7 0-2 1-4 3-5v6h4V2z" fill="url(#tiktokGrad)"/>
-  </svg>
-  <div>
-    <h3>TikTok</h3>
-    <p id="ttFollowers">42.8K Followers</p>
-  </div>
+  <svg viewBox="0 0 24 24" width="50" height="50"><defs><linearGradient id="tiktokGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#69C9D0"/><stop offset="50%" stop-color="#EE1D52"/><stop offset="100%" stop-color="#000"/></linearGradient></defs><path d="M12 2v16c-4-0.5-7-3-7-7 0-2 1-4 3-5v6h4V2z" fill="url(#tiktokGrad)"/></svg>
+  <div><h3>TikTok</h3><p id="ttFollowers">42.8K Followers</p></div>
 </a>
-<!-- Facebook -->
 <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card">
-  <svg viewBox="0 0 24 24" fill="#1877F2" width="50" height="50">
-    <path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.5 9.9v-7h-2.5v-2.9h2.5v-2.2c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6v1.8h2.9l-.5 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/>
-  </svg>
-  <div>
-    <h3>Facebook</h3>
-    <p id="fbFollowers">5K Followers</p>
-  </div>
+  <svg viewBox="0 0 24 24" fill="#1877F2" width="50" height="50"><path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.5 9.9v-7h-2.5v-2.9h2.5v-2.2c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6v1.8h2.9l-.5 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/></svg>
+  <div><h3>Facebook</h3><p id="fbFollowers">5K Followers</p></div>
 </a>
-<!-- Instagram -->
 <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card">
-  <svg viewBox="0 0 24 24" width="50" height="50">
-    <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F58529"/>
-      <stop offset="50%" stop-color="#DD2A7B"/>
-      <stop offset="100%" stop-color="#515BD4"/>
-    </linearGradient>
-    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
-  </svg>
-  <div>
-    <h3>Instagram</h3>
-    <p id="igFollowers">436 Followers</p>
-  </div>
+  <svg viewBox="0 0 24 24" width="50" height="50"><linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F58529"/><stop offset="50%" stop-color="#DD2A7B"/><stop offset="100%" stop-color="#515BD4"/></linearGradient><path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
+  <div><h3>Instagram</h3><p id="igFollowers">436 Followers</p></div>
 </a>
 </div>
 </section>
@@ -154,7 +171,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </div>
 
 <script>
-// ---------- Header Image Switch ----------
+// ---------- Header switch ----------
 const galleryImgs = document.querySelectorAll("#gallery img");
 const mainImg = document.getElementById("mainHeaderImg");
 let imgIndex = 0;
@@ -174,84 +191,103 @@ const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
 const ytSubsEl = document.getElementById("ytSubs");
 let currentVideoId = "";
 const livePlayer = document.getElementById("livePlayer");
-let popularVideos = [];
-let popularVideoTitles = [];
+const videoPreloader = document.getElementById("videoPreloader");
+const liveOverlayText = document.getElementById("liveOverlayText");
+const liveBanner = document.getElementById("liveBanner");
+
+// Most viewed videos
+let popularVideos = ["VIDEO_ID1","VIDEO_ID2","VIDEO_ID3","VIDEO_ID4"];
+let popularVideoTitles = ["Cover 1","Cover 2","Cover 3","Cover 4"];
 let currentIndex = 0;
 
-// Update subscriber count
+// ---------- Populate carousel ----------
+const thumbCarouselEl = document.getElementById("thumbCarousel");
+function populateThumbnailCarousel(){
+  thumbCarouselEl.innerHTML = "";
+  popularVideos.forEach((vidId, idx)=>{
+    const thumbDiv = document.createElement("div");
+    const imgEl = document.createElement("img");
+    imgEl.src = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+    const titleEl = document.createElement("div");
+    titleEl.className = "thumb-title";
+    titleEl.innerText = popularVideoTitles[idx];
+    thumbDiv.appendChild(imgEl);
+    thumbDiv.appendChild(titleEl);
+    thumbDiv.onclick = ()=>{
+      currentIndex = idx;
+      switchToVideo(vidId, false);
+    };
+    thumbCarouselEl.appendChild(thumbDiv);
+  });
+}
+populateThumbnailCarousel();
+
+// ---------- Carousel arrows ----------
+document.getElementById("prevThumb").onclick = ()=>{
+  thumbCarouselEl.scrollBy({left:-130, behavior:'smooth'});
+};
+document.getElementById("nextThumb").onclick = ()=>{
+  thumbCarouselEl.scrollBy({left:130, behavior:'smooth'});
+};
+
+// ---------- Switch video ----------
+function switchToVideo(videoId,isLive=false){
+  if(videoId !== currentVideoId){
+    videoPreloader.style.display="flex";
+    livePlayer.style.opacity=0.4;
+    liveOverlayText.style.display=isLive?"block":"none";
+    setTimeout(()=>{
+      livePlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      currentVideoId=videoId;
+      livePlayer.onload=()=>{
+        videoPreloader.style.display="none";
+        livePlayer.style.opacity=1;
+      };
+    },400);
+  }
+}
+
+// ---------- Update live video ----------
+async function updateLiveVideo(){
+  try{
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
+    const data = await res.json();
+    if(data.items.length>0){
+      const videoId=data.items[0].id.videoId;
+      liveBanner.style.display="block";
+      switchToVideo(videoId,true);
+    } else {
+      liveBanner.style.display="none";
+      switchToVideo(popularVideos[currentIndex],false);
+    }
+  }catch(e){console.error(e);}
+}
+
+// ---------- Update subscriber count ----------
 async function updateYTStats(){
   try{
     const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
     const data = await res.json();
-    ytSubsEl.innerText = parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
+    ytSubsEl.innerText=parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
   }catch(e){ytSubsEl.innerText="N/A";}
 }
 
-// Update Now Playing with scrolling
-function updateNowPlaying(title){
-  const nowPlayingEl = document.getElementById("nowPlaying");
-  nowPlayingEl.innerText = title;
-  // Restart animation
-  const newEl = nowPlayingEl.cloneNode(true);
-  nowPlayingEl.parentNode.replaceChild(newEl, nowPlayingEl);
-}
-
-// Load live or popular
-async function loadLiveOrPopular(){
-  try{
-    const liveRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
-    const liveData = await liveRes.json();
-    if(liveData.items.length>0){
-      currentVideoId = liveData.items[0].id.videoId;
-      livePlayer.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1`;
-      updateNowPlaying("LIVE: " + liveData.items[0].snippet.title);
-    } else {
-      const popRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=viewCount&maxResults=10&key=${YT_API_KEY}`);
-      const popData = await popRes.json();
-      popularVideos = popData.items.map(item=>item.id.videoId);
-      popularVideoTitles = popData.items.map(item=>item.snippet.title);
-      showPopularVideo(0);
-    }
-  } catch(e){console.error(e);}
-}
-
-// Show popular video
-function showPopularVideo(index){
-  if(popularVideos.length===0) return;
-  currentIndex = index % popularVideos.length;
-  livePlayer.src = `https://www.youtube.com/embed/${popularVideos[currentIndex]}?autoplay=1&mute=1`;
-  updateNowPlaying("Now Playing: " + popularVideoTitles[currentIndex]);
-}
-
-// Next video button
-function nextPopularVideo(){
-  if(popularVideos.length===0) return;
-  currentIndex = (currentIndex + 1) % popularVideos.length;
-  livePlayer.src = `https://www.youtube.com/embed/${popularVideos[currentIndex]}?autoplay=1&mute=0`;
-  updateNowPlaying("Now Playing: " + popularVideoTitles[currentIndex]);
-}
-
-// Manual live URLs
-const liveUrls = {
-  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
-  tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
+// ---------- Manual Live URLs ----------
+const liveUrls={
+  youtube:"",
+  facebook:"https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  tiktok:"https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
 };
-
-// Show live by tab
 function showLive(platform){
-  if(platform==="youtube"){
-    loadLiveOrPopular();
-  } else {
-    livePlayer.src = liveUrls[platform];
-    updateNowPlaying(platform.charAt(0).toUpperCase() + platform.slice(1) + " Live");
-  }
+  if(platform==="youtube") updateLiveVideo();
+  else switchToVideo(liveUrls[platform],false);
 }
 
-// Run on load
-loadLiveOrPopular();
+// ---------- Init ----------
+updateLiveVideo();
 updateYTStats();
+setInterval(updateLiveVideo,60000);
 setInterval(updateYTStats,120000);
-setInterval(loadLiveOrPopular,60000);
 </script>
 
 </body>

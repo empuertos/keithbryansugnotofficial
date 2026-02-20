@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Keith Bryan Sugnot | Official Website</title>
@@ -12,14 +11,12 @@
             background: #0f0f0f;
             color: #fff;
         }
-
         header {
             position: relative;
             padding: 40px;
             text-align: center;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
         }
-
         header img {
             width: 220px;
             height: 220px;
@@ -28,24 +25,19 @@
             border: 5px solid #fff;
             transition: opacity 1s;
         }
-
         section {
             padding: 40px 20px;
             max-width: 1000px;
             margin: auto;
         }
-
-        h1,
-        h2 {
+        h1, h2 {
             margin: 10px 0;
         }
-
         /* ---------- Live Tabs ---------- */
         #liveTabs {
             margin-bottom: 15px;
             text-align: center;
         }
-
         #liveTabs button {
             padding: 10px 20px;
             margin: 0 5px;
@@ -56,11 +48,9 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         #liveTabs button:hover {
             background: #1e3c72;
         }
-
         #livePlayer {
             width: 100%;
             height: 315px;
@@ -69,7 +59,6 @@
             /* transition: opacity 0.3s ease-in-out;  Inalis ang transition */
             opacity: 1;
         }
-
         /* ---------- LIVE Banner ---------- */
         #liveBanner {
             display: none;
@@ -81,7 +70,6 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
-
         /* ---------- Support / Donation ---------- */
         #donationSection {
             margin-top: 20px;
@@ -90,17 +78,14 @@
             border-radius: 10px;
             text-align: center;
         }
-
         /* ---------- Booking / Contact ---------- */
-        form input,
-        form textarea {
+        form input, form textarea {
             width: 100%;
             padding: 10px;
             margin: 8px 0;
             border: none;
             border-radius: 5px;
         }
-
         form button {
             padding: 12px 20px;
             margin: 0 5px;
@@ -111,7 +96,6 @@
             font-size: 16px;
             cursor: pointer;
         }
-
         /* ---------- Gallery ---------- */
         .gallery {
             display: grid;
@@ -119,18 +103,15 @@
             gap: 15px;
             margin-top: 20px;
         }
-
         .gallery img {
             width: 100%;
             border-radius: 10px;
             cursor: pointer;
             transition: transform 0.3s;
         }
-
         .gallery img:hover {
             transform: scale(1.05);
         }
-
         /* ---------- Social Media ---------- */
         .social-cards {
             display: grid;
@@ -138,7 +119,6 @@
             gap: 20px;
             padding: 20px 0;
         }
-
         .social-cards .card {
             display: flex;
             align-items: center;
@@ -150,12 +130,10 @@
             color: #fff;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .social-cards .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-
         .social-cards .card svg {
             flex-shrink: 0;
             width: 60px;
@@ -165,18 +143,15 @@
             filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
             /* Add subtle shadow */
         }
-
         .social-cards .card h3 {
             margin: 0;
             font-size: 18px;
         }
-
         .social-cards .card p {
             margin: 2px 0 0 0;
             font-size: 14px;
             color: #ccc;
         }
-
         /* ---------- Footer & Audio ---------- */
         footer {
             text-align: center;
@@ -184,7 +159,6 @@
             background: #111;
             color: #aaa;
         }
-
         .audio-player {
             position: fixed;
             bottom: 20px;
@@ -192,23 +166,19 @@
             display: none;
             /* Naka-hide */
         }
-
         /* ---------- Media Queries ---------- */
         /* Para sa mas maliliit na screens */
         @media (max-width: 768px) {
             header {
                 padding: 20px;
             }
-
             header img {
                 width: 150px;
                 height: 150px;
             }
-
             .social-cards {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
-
             #livePlayer {
                 height: 200px;
                 /* Bawasan ang height sa mobile */
@@ -216,17 +186,14 @@
         }
     </style>
 </head>
-
 <body>
-
     <header>
         <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith1.jpg"
-            alt="Keith Bryan Sugnot" id="mainHeaderImg">
+             alt="Keith Bryan Sugnot" id="mainHeaderImg">
         <h1>Keith Bryan Sugnot</h1>
         <h2>Event Singer • Live & Cover Songs</h2>
         <p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
     </header>
-
     <!-- ---------- Live Performance ---------- -->
     <section>
         <h2>🔴 Playlist and Live Performance</h2>
@@ -236,22 +203,17 @@
             <button onclick="showLive('facebook')">Facebook live</button>
             <button onclick="showLive('tiktok')">TikTok live</button>
         </div>
-
         <!-- LIVE banner -->
         <div id="liveBanner">🔴 LIVE Now on YouTube!</div>
-
         <iframe id="livePlayer" width="100%" height="315" src="https://www.youtube.com/embed/QCl3w0yPnf8"
-            frameborder="0" allowfullscreen></iframe>
-
+                frameborder="0" allowfullscreen></iframe>
     </section>
-
     <!-- ---------- Donation ---------- -->
     <section id="donationSection">
         <h2>💸 Support / Donation</h2>
         <p><strong>COMING SOON</strong></p>
         <p>GCash • Maya • QR Code will be available soon.</p>
     </section>
-
     <!-- ---------- Booking / Contact ---------- -->
     <section>
         <h2>📩 Booking / Contact</h2>
@@ -264,27 +226,20 @@
             <button type="submit">Send Inquiry</button>
         </form>
     </section>
-
     <!-- ---------- Gallery ---------- -->
     <section>
         <h2>🖼 Gallery</h2>
         <div class="gallery" id="gallery">
-            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith2.jpg"
-                alt="Image">
-            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith3.jpg"
-                alt="Image">
-            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith4.jpg"
-                alt="Image">
-            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith5.jpg"
-                alt="Image">
+            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith2.jpg" alt="Image">
+            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith3.jpg" alt="Image">
+            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith4.jpg" alt="Image">
+            <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith5.jpg" alt="Image">
         </div>
     </section>
-
     <!-- ---------- Social Media ---------- -->
     <section>
         <h2>🌐 Social Media</h2>
         <div class="social-cards">
-
             <!-- YouTube -->
             <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
                 <svg viewBox="0 0 24 24" width="60" height="60">
@@ -296,7 +251,6 @@
                     <p id="ytSubs">1.92K Subscribers</p>
                 </div>
             </a>
-
             <!-- TikTok -->
             <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
                 <svg viewBox="0 0 24 24" width="60" height="60">
@@ -314,7 +268,6 @@
                     <p id="ttFollowers">42.8K Followers</p>
                 </div>
             </a>
-
             <!-- Facebook -->
             <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card">
                 <svg viewBox="0 0 24 24" width="60" height="60" fill="#1877F2">
@@ -326,7 +279,6 @@
                     <p id="fbFollowers">5K Followers</p>
                 </div>
             </a>
-
             <!-- Instagram -->
             <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card">
                 <svg viewBox="0 0 24 24" width="60" height="60">
@@ -336,31 +288,26 @@
                         <stop offset="100%" stop-color="#515BD4" />
                     </linearGradient>
                     <path fill="url(#instaGrad)"
-                        d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z" />
+                          d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z" />
                 </svg>
                 <div>
                     <h3>Instagram</h3>
                     <p id="igFollowers">436 Followers</p>
                 </div>
             </a>
-
         </div>
     </section>
-
     <footer>
         © 2026 Keith Bryan Sugnot. All rights reserved.
     </footer>
-
     <div class="audio-player">
         <audio id="bgMusic" src="background.mp3" controls autoplay loop>
     </div>
-
     <script>
         // ---------- Header Image Switch ----------
         const galleryImgs = document.querySelectorAll("#gallery img");
         const mainImg = document.getElementById("mainHeaderImg");
         let imgIndex = 0;
-
         function switchHeaderImg() {
             mainImg.style.opacity = 0;
             setTimeout(() => {
@@ -370,15 +317,12 @@
             }, 500);
         }
         setInterval(switchHeaderImg, 5000);
-
         // ---------- YouTube Video Data ----------
         let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j"; // Para sa Playlist ID
         let channelId = "UC13X4zA6-9aLegj9KUmEQgg"; // Channel ID ni Keith
-
         // ---------- DOM Elements ----------
         const liveBanner = document.getElementById("liveBanner");
         const livePlayer = document.getElementById("livePlayer");
-
         // ---------- Function: showLive() ----------
         function showLive(platform) {
             if (platform === "youtube") {
@@ -397,20 +341,16 @@
                 const url = liveUrls[platform];
                 if (url.includes("YOUR_FACEBOOK_LIVE_URL")) {
                     alert(
-                        `Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`
-                    );
+                        `Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`);
                 } else {
                     window.location.href = url; // Redirect to the platform
                 }
             }
         }
-
         // ---------- Initialize Playlist ----------
         window.onload = function () {
             showLive("playlist");
         };
     </script>
-
 </body>
-
 </html>

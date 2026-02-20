@@ -243,25 +243,28 @@ setInterval(switchHeaderImg,5000);
 const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
 const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
 const ytSubsEl = document.getElementById("ytSubs");
-let currentVideoId = "";
+let currentVideoId = ""; // Stores the ID of the currently playing YouTube video (live or popular)
 const livePlayer = document.getElementById("livePlayer");
 const liveBanner = document.getElementById("liveBanner");
 
 // ---------- Most Viewed Videos ----------
 // IMPORTANT: Replace these with actual YouTube video IDs and their corresponding titles
 // from Keith Bryan Sugnot's most viewed covers.
-// Example values provided.
+// Example values are provided.
 let popularVideos = ["dQw4w9WgXcQ", "P-E0G30mC_4", "fJ9rUzIMcZQ", "xvFZjo5PgG0"];
 let popularVideoTitles = ["Never Gonna Give You Up", "Bohemian Rhapsody Cover", "Hallelujah Cover", "Perfect Cover"];
 let currentIndex = 0;
 const thumbCarousel = document.getElementById("thumbCarousel");
 
+// Loads a specific popular video into the iframe
 function showPopularVideo(idx) {
   currentIndex = idx;
   livePlayer.src = `https://www.youtube.com/embed/${popularVideos[idx]}?autoplay=1`;
+  currentVideoId = popularVideos[idx]; // Update currentVideoId when a popular video is played
+  liveBanner.style.display = "none"; // Hide live banner if showing a popular video
 }
 
-// Populate carousel with YouTube thumbnails
+// Populates the carousel with thumbnails of popular videos
 function populateThumbnailCarousel() {
   thumbCarousel.innerHTML = "";
   if (popularVideos.length === 0) {
@@ -278,6 +281,4 @@ function populateThumbnailCarousel() {
     thumbDiv.appendChild(imgEl);
     thumbDiv.appendChild(titleEl);
     thumbDiv.onclick = () => {
-      showPopularVideo(idx);
-      livePlayer.scrollIntoView({ behavior: 'smooth' });
-    };
+      

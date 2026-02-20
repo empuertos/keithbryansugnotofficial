@@ -75,6 +75,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🔴 Live Performance</h2>
 <div id="liveTabs">
+  <button onclick="showLive('playlist')">Playlist Covers</button> <!-- Ito ang idinagdag at ginawang una -->
   <button onclick="showLive('youtube')">YouTube</button>
   <button onclick="showLive('facebook')">Facebook</button>
   <button onclick="showLive('tiktok')">TikTok</button>
@@ -270,17 +271,21 @@ function showLive(platform) {
   liveBanner.style.display = "none";
   currentlyPlayingContent = ""; // Reset currently playing content
 
-  if (platform === "youtube") {
+  if (platform === "playlist") { // Para sa Playlist Covers
+    if (mostViewedPlaylistId) {
+      showContent(mostViewedPlaylistId, true);
+    } else {
+      livePlayer.src = "";
+      console.error("No Most Viewed Playlist is currently set.");
+      alert("No Most Viewed Playlist is currently set.");
+    }
+  } else if (platform === "youtube") {
     if (currentLiveVideoId) { // Check if there's a manual live video ID
       showContent(currentLiveVideoId, false); // Play the live video
       liveBanner.style.display = "block"; // Show LIVE banner
-    } else if (mostViewedPlaylistId) { // If no live, play the most viewed playlist
-      showContent(mostViewedPlaylistId, true); // Play the playlist
-      // liveBanner remains hidden
     } else {
-      livePlayer.src = ""; // Clear player if no live and no playlist
-      console.error("No YouTube Live or Most Viewed Playlist is currently set."); // Ito ang idinagdag
-      alert("No YouTube Live or Most Viewed Playlist is currently set.");
+      showLive('playlist'); // Kung walang live, ipakita ang playlist
+      liveBanner.style.display = "none"; // Itago ang LIVE banner
     }
   } else {
     const url = liveUrls[platform];
@@ -295,7 +300,7 @@ function showLive(platform) {
 
 // Ipakita ang YouTube playlist pagkatapos mag-load ang page
 window.onload = function() {
-  showLive('youtube');
+  showLive('playlist'); // Ito ang unang lalabas
 };
 </script>
 

@@ -19,7 +19,7 @@ iframe{width:100%;height:315px;border:none;border-radius:10px;}
 
 /* ---------- LIVE Banner ---------- */
 #liveBanner{
-  display:none;
+  display:none; /* It will be displayed if currentLiveVideoId is set */
   background:#FF0000;
   color:#fff;
   text-align:center;
@@ -164,7 +164,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>YouTube</h3>
-    <p id="ytSubs">Loading...</p>
+    <p id="ytSubs">Loading...</p> <!-- This will be manually updated by JS -->
   </div>
 </a>
 
@@ -239,16 +239,54 @@ function switchHeaderImg(){
 }
 setInterval(switchHeaderImg,5000);
 
-// ---------- YouTube API ----------
-const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
-const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
+// ---------- YouTube Video Data (MANUALLY MANAGED) ----------
+// **** IMPORTANT: I-UPDATE ITO MANUALLY ****
+// Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
+let currentLiveVideoId = ""; // Example: "your_live_stream_video_id"
+
+// Listahan ng Most Viewed Covers. Palitan ang mga video IDs at titles ng ACTWAL na covers ni Keith Bryan Sugnot.
+let popularVideos = [
+  "dQw4w9WgXcQ", // Example: Rick Astley - Never Gonna Give Up
+  "P-E0G30mC_4", // Example: Queen - Bohemian Rhapsody (Cover)
+  "fJ9rUzIMcZQ", // Example: Leonard Cohen - Hallelujah (Cover)
+  "xvFZjo5PgG0"  // Example: Ed Sheeran - Perfect (Cover)
+];
+let popularVideoTitles = [
+  "Never Gonna Give You Up",
+  "Bohemian Rhapsody Cover",
+  "Hallelujah Cover",
+  "Perfect Cover"
+];
+
+// ---------- DOM Elements ----------
 const ytSubsEl = document.getElementById("ytSubs");
-let currentVideoId = ""; // Stores the ID of the currently playing YouTube video (live or popular)
 const livePlayer = document.getElementById("livePlayer");
 const liveBanner = document.getElementById("liveBanner");
+const thumbCarousel = document.getElementById("thumbCarousel");
 
-// ---------- Most Viewed Videos ----------
-// IMPORTANT: Replace these with actual YouTube video IDs and their corresponding titles
-// from Keith Bryan Sugnot's most viewed covers.
-// Example values are provided.
-let popularVideos = ["dQw4w9WgXcQ", "P-E0G30mC_4", "fJ9rUzIMcZQ", "xvFZjo5Pg
+// ---------- Global State ----------
+let currentlyPlayingVideoId = ""; // Track what's currently in the iframe
+
+// Loads a specific video into the iframe
+function showVideo(videoId) {
+  if (videoId) {
+    livePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    currentlyPlayingVideoId = videoId;
+  } else {
+    livePlayer.src = "";
+    currentlyPlayingVideoId = "";
+  }
+}
+
+// Populates the carousel with thumbnails of popular videos
+function populateThumbnailCarousel() {
+  thumbCarousel.innerHTML = ""; // Clear existing thumbnails
+  if (popularVideos.length === 0) {
+    thumbCarousel.innerHTML = "<p style='text-align:center; color:#ccc;'>No popular videos set up yet.</p>";
+    return;
+  }
+  popularVideos.forEach((vidId, idx) => {
+    const thumbDiv = document.createElement("div");
+    const imgEl = document.createElement("img");
+    imgEl.src = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+    imgEl.alt = popularVideoTitles[idx] || "YouTube Video Thumbnail"; // Add alt

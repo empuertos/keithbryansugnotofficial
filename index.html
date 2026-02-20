@@ -55,28 +55,59 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   <button onclick="showLive('tiktok')">TikTok</button>
 </div>
 
+<!-- Video Wrapper -->
 <div id="videoWrapper" style="position:relative; width:100%; max-width:1000px; margin:auto;">
   <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+
+  <!-- Overlay -->
   <div id="videoPreloader" style="
-    display:flex;
+    display:none;
     position:absolute;
     top:0; left:0;
     width:100%; height:100%;
     background:rgba(0,0,0,0.5);
+    display:flex; flex-direction:column;
     align-items:center; justify-content:center;
     border-radius:10px;
-    flex-direction:column;
   ">
-    <div style="width:50px; height:50px; border:5px solid #fff; border-top-color:#2a5298; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:10px;"></div>
-    <div id="liveOverlayText" style="display:none; font-weight:bold; font-size:24px; color:red; text-shadow:0 0 8px rgba(255,0,0,0.8); animation:pulse 1s infinite;">🔴 LIVE</div>
+    <div style="
+      width:50px; height:50px;
+      border:5px solid #fff;
+      border-top-color:#2a5298;
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+      margin-bottom:10px;
+    "></div>
+    <div id="liveOverlayText" style="
+      display:none;
+      font-weight:bold;
+      font-size:24px;
+      color:red;
+      text-shadow:0 0 8px rgba(255,0,0,0.8);
+      animation:pulse 1s infinite;
+    ">🔴 LIVE</div>
   </div>
 </div>
 
-<div id="liveBanner" style="display:none;text-align:center;margin:10px 0;font-weight:bold;color:red;">🔴 LIVE Now on YouTube!</div>
+<!-- LIVE Banner -->
+<div id="liveBanner" style="
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:bold;
+  color:red;
+">🔴 LIVE Now on YouTube!</div>
 
+<!-- Thumbnail carousel with arrows -->
 <div style="position:relative; max-width:1000px; margin:auto; padding-top:10px;">
-  <button id="prevThumb" style="position:absolute; left:0; top:50%; transform:translateY(-50%); z-index:10; background:rgba(0,0,0,0.5); border:none; color:#fff; padding:8px 12px; border-radius:5px; cursor:pointer;">&#10094;</button>
-  <button id="nextThumb" style="position:absolute; right:0; top:50%; transform:translateY(-50%); z-index:10; background:rgba(0,0,0,0.5); border:none; color:#fff; padding:8px 12px; border-radius:5px; cursor:pointer;">&#10095;</button>
+  <button id="prevThumb" style="
+    position:absolute; left:0; top:50%; transform:translateY(-50%);
+    z-index:10; background:rgba(0,0,0,0.5); border:none; color:#fff;
+    padding:8px 12px; border-radius:5px; cursor:pointer;">&#10094;</button>
+  <button id="nextThumb" style="
+    position:absolute; right:0; top:50%; transform:translateY(-50%);
+    z-index:10; background:rgba(0,0,0,0.5); border:none; color:#fff;
+    padding:8px 12px; border-radius:5px; cursor:pointer;">&#10095;</button>
   <div id="thumbCarousel" style="display:flex; overflow-x:auto; gap:10px; scroll-behavior:smooth; padding:0 40px;"></div>
 </div>
 </section>
@@ -140,111 +171,123 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </div>
 
 <script>
-const galleryImgs=document.querySelectorAll("#gallery img");
-const mainImg=document.getElementById("mainHeaderImg");
-let imgIndex=0;
+// ---------- Header switch ----------
+const galleryImgs = document.querySelectorAll("#gallery img");
+const mainImg = document.getElementById("mainHeaderImg");
+let imgIndex = 0;
 function switchHeaderImg(){
-  mainImg.style.opacity=0;
+  mainImg.style.opacity = 0;
   setTimeout(()=>{
-    mainImg.src=galleryImgs[imgIndex].src;
-    mainImg.style.opacity=1;
-    imgIndex=(imgIndex+1)%galleryImgs.length;
+    mainImg.src = galleryImgs[imgIndex].src;
+    mainImg.style.opacity = 1;
+    imgIndex = (imgIndex+1)%galleryImgs.length;
   },500);
 }
 setInterval(switchHeaderImg,5000);
 
-// ---------- YouTube Auto Live + Most Viewed ----------
-const YT_API_KEY="AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
-const CHANNEL_ID="UCefBEmdYeUm65g9LXWkTFrw";
-const ytSubsEl=document.getElementById("ytSubs");
-let currentVideoId="";
-const livePlayer=document.getElementById("livePlayer");
-const videoPreloader=document.getElementById("videoPreloader");
-const liveOverlayText=document.getElementById("liveOverlayText");
-const liveBanner=document.getElementById("liveBanner");
-const thumbCarouselEl=document.getElementById("thumbCarousel");
-let popularVideos=[],popularVideoTitles=[],currentIndex=0;
+// ---------- YouTube API ----------
+const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
+const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
+const ytSubsEl = document.getElementById("ytSubs");
+let currentVideoId = "";
+const livePlayer = document.getElementById("livePlayer");
+const videoPreloader = document.getElementById("videoPreloader");
+const liveOverlayText = document.getElementById("liveOverlayText");
+const liveBanner = document.getElementById("liveBanner");
 
-// Populate carousel
+// Most viewed videos
+let popularVideos = ["VIDEO_ID1","VIDEO_ID2","VIDEO_ID3","VIDEO_ID4"];
+let popularVideoTitles = ["Cover 1","Cover 2","Cover 3","Cover 4"];
+let currentIndex = 0;
+
+// ---------- Populate carousel ----------
+const thumbCarouselEl = document.getElementById("thumbCarousel");
 function populateThumbnailCarousel(){
-  thumbCarouselEl.innerHTML="";
-  popularVideos.forEach((vidId,idx)=>{
-    const thumbDiv=document.createElement("div");
-    const imgEl=document.createElement("img");
-    imgEl.src=`https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
-    const titleEl=document.createElement("div");
-    titleEl.className="thumb-title";
-    titleEl.innerText=popularVideoTitles[idx];
+  thumbCarouselEl.innerHTML = "";
+  popularVideos.forEach((vidId, idx)=>{
+    const thumbDiv = document.createElement("div");
+    const imgEl = document.createElement("img");
+    imgEl.src = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+    const titleEl = document.createElement("div");
+    titleEl.className = "thumb-title";
+    titleEl.innerText = popularVideoTitles[idx];
     thumbDiv.appendChild(imgEl);
     thumbDiv.appendChild(titleEl);
-    thumbDiv.onclick=()=>{
-      currentIndex=idx;
-      switchToVideo(vidId,false);
+    thumbDiv.onclick = ()=>{
+      currentIndex = idx;
+      switchToVideo(vidId, false);
     };
     thumbCarouselEl.appendChild(thumbDiv);
   });
 }
+populateThumbnailCarousel();
 
-// Carousel arrows
-document.getElementById("prevThumb").onclick=()=>{thumbCarouselEl.scrollBy({left:-130,behavior:'smooth'});};
-document.getElementById("nextThumb").onclick=()=>{thumbCarouselEl.scrollBy({left:130,behavior:'smooth'});};
+// ---------- Carousel arrows ----------
+document.getElementById("prevThumb").onclick = ()=>{
+  thumbCarouselEl.scrollBy({left:-130, behavior:'smooth'});
+};
+document.getElementById("nextThumb").onclick = ()=>{
+  thumbCarouselEl.scrollBy({left:130, behavior:'smooth'});
+};
 
-// Switch video
+// ---------- Switch video ----------
 function switchToVideo(videoId,isLive=false){
-  if(videoId!==currentVideoId){
+  if(videoId !== currentVideoId){
     videoPreloader.style.display="flex";
     livePlayer.style.opacity=0.4;
     liveOverlayText.style.display=isLive?"block":"none";
     setTimeout(()=>{
       livePlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1`;
       currentVideoId=videoId;
-      livePlayer.onload=()=>{videoPreloader.style.display="none";livePlayer.style.opacity=1;};
-    },300);
+      livePlayer.onload=()=>{
+        videoPreloader.style.display="none";
+        livePlayer.style.opacity=1;
+      };
+    },400);
   }
 }
 
-// Fetch subscriber count
-async function updateYTStats(){
+// ---------- Update live video ----------
+async function updateLiveVideo(){
   try{
-    const res=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
-    const data=await res.json();
-    ytSubsEl.innerText=parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
-  }catch(e){ytSubsEl.innerText="N/A";}
-}
-
-// Fetch live video or most viewed
-async function fetchVideos(){
-  try{
-    const liveRes=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
-    const liveData=await liveRes.json();
-    if(liveData.items.length>0){
-      const liveVideoId=liveData.items[0].id.videoId;
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
+    const data = await res.json();
+    if(data.items.length>0){
+      const videoId=data.items[0].id.videoId;
       liveBanner.style.display="block";
-      switchToVideo(liveVideoId,true);
+      switchToVideo(videoId,true);
     } else {
       liveBanner.style.display="none";
-      // fetch most viewed
-      const topRes=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=viewCount&maxResults=10&key=${YT_API_KEY}`);
-      const topData=await topRes.json();
-      popularVideos=topData.items.map(item=>item.id.videoId);
-      popularVideoTitles=topData.items.map(item=>item.snippet.title);
-      populateThumbnailCarousel();
       switchToVideo(popularVideos[currentIndex],false);
     }
   }catch(e){console.error(e);}
 }
 
-async function initYT(){
-  updateYTStats();
-  fetchVideos();
-  setInterval(updateYTStats,120000);
-  setInterval(fetchVideos,60000);
+// ---------- Update subscriber count ----------
+async function updateYTStats(){
+  try{
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
+    const data = await res.json();
+    ytSubsEl.innerText=parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
+  }catch(e){ytSubsEl.innerText="N/A";}
 }
-initYT();
 
-// Manual live tabs
-const liveUrls={youtube:"",facebook:"https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",tiktok:"https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"};
-function showLive(platform){if(platform==="youtube") fetchVideos(); else switchToVideo(liveUrls[platform],false);}
+// ---------- Manual Live URLs ----------
+const liveUrls={
+  youtube:"",
+  facebook:"https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  tiktok:"https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
+};
+function showLive(platform){
+  if(platform==="youtube") updateLiveVideo();
+  else switchToVideo(liveUrls[platform],false);
+}
+
+// ---------- Init ----------
+updateLiveVideo();
+updateYTStats();
+setInterval(updateLiveVideo,60000);
+setInterval(updateYTStats,120000);
 </script>
 
 </body>

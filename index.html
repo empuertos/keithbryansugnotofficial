@@ -44,7 +44,7 @@ form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;c
 /* ---------- Social Media ---------- */
 .social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
 .social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
-.social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+.social-cards .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
 .social-cards .card svg{flex-shrink:0;width:50px;height:50px;}
 .social-cards .card h3{margin:0;font-size:18px;}
 .social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
@@ -221,7 +221,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </footer>
 
 <div class="audio-player">
-<audio id="bgMusic" src="background.mp3" controls autoplay loop></audio>
+<audio id="bgMusic" src="background.mp3" controls autoplay loop>
 </div>
 
 <script>
@@ -248,81 +248,48 @@ const livePlayer = document.getElementById("livePlayer");
 const liveBanner = document.getElementById("liveBanner");
 
 // ---------- Most Viewed Videos ----------
-let popularVideos = ["VIDEO_ID1","VIDEO_ID2","VIDEO_ID3","VIDEO_ID4"];
-let popularVideoTitles = ["Cover 1","Cover 2","Cover 3","Cover 4"];
-let currentIndex=0;
+// IMPORTANT: Replace these with actual YouTube video IDs and their corresponding titles
+// from Keith Bryan Sugnot's most viewed covers.
+// Example values provided.
+let popularVideos = ["dQw4w9WgXcQ", "P-E0G30mC_4", "fJ9rUzIMcZQ", "xvFZjo5PgG0"];
+let popularVideoTitles = ["Never Gonna Give You Up", "Bohemian Rhapsody Cover", "Hallelujah Cover", "Perfect Cover"];
+let currentIndex = 0;
 const thumbCarousel = document.getElementById("thumbCarousel");
 
-function showPopularVideo(idx){
-  currentIndex=idx;
-  livePlayer.src=`https://www.youtube.com/embed/${popularVideos[idx]}?autoplay=1`;
+function showPopularVideo(idx) {
+  currentIndex = idx;
+  livePlayer.src = `https://www.youtube.com/embed/${popularVideos[idx]}?autoplay=1`;
 }
 
 // Populate carousel with YouTube thumbnails
-function populateThumbnailCarousel(){
-  thumbCarousel.innerHTML="";
-  popularVideos.forEach((vidId,idx)=>{
-    const thumbDiv=document.createElement("div");
-    const imgEl=document.createElement("img");
-    imgEl.src=`https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
-    const titleEl=document.createElement("div");
-    titleEl.className="thumb-title";
-    titleEl.innerText=popularVideoTitles[idx];
+function populateThumbnailCarousel() {
+  thumbCarousel.innerHTML = "";
+  if (popularVideos.length === 0) {
+    thumbCarousel.innerHTML = "<p style='text-align:center; color:#ccc;'>No popular videos set up yet.</p>";
+    return;
+  }
+  popularVideos.forEach((vidId, idx) => {
+    const thumbDiv = document.createElement("div");
+    const imgEl = document.createElement("img");
+    imgEl.src = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+    const titleEl = document.createElement("div");
+    titleEl.className = "thumb-title";
+    titleEl.innerText = popularVideoTitles[idx] || "Video Title"; // Fallback title
     thumbDiv.appendChild(imgEl);
     thumbDiv.appendChild(titleEl);
-    thumbDiv.onclick=()=>{ showPopularVideo(idx); livePlayer.scrollIntoView({behavior:'smooth'}); };
+    thumbDiv.onclick = () => {
+      showPopularVideo(idx);
+      livePlayer.scrollIntoView({ behavior: 'smooth' });
+    };
     thumbCarousel.appendChild(thumbDiv);
   });
 }
 
 // ---------- Update YouTube Stats ----------
-async function updateYTStats(){
-  try{
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
-    const data = await res.json();
-    ytSubsEl.innerText = parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
-  }catch(e){ytSubsEl.innerText="N/A";}
-}
-
-// ---------- Update Live Video ----------
-async function updateLiveVideo(){
-  try{
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
-    const data = await res.json();
-    let videoId;
-    if(data.items.length>0){
-      videoId=data.items[0].id.videoId;
-      liveBanner.style.display="block"; // show LIVE banner
-    } else{
-      videoId=popularVideos[currentIndex]; // fallback to most viewed
-      liveBanner.style.display="none"; // hide LIVE banner
-    }
-    if(videoId!==currentVideoId){
-      livePlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      currentVideoId=videoId;
-    }
-  }catch(e){console.error(e);}
-}
-
-// ---------- Manual Live URLs ----------
-const liveUrls={
-  youtube:"", // auto-handled
-  facebook:"https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
-  tiktok:"https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
-};
-
-function showLive(platform){
-  if(platform==="youtube"){ updateLiveVideo(); }
-  else{ livePlayer.src=liveUrls[platform]; }
-}
-
-// ---------- Initialize ----------
-updateLiveVideo();
-updateYTStats();
-populateThumbnailCarousel();
-setInterval(updateLiveVideo,60000);
-setInterval(updateYTStats,120000);
-</script>
-
-</body>
-</html>
+async function updateYTStats() {
+  if (!YT_API_KEY || !CHANNEL_ID) {
+    ytSubsEl.innerText = "API Key/Channel ID Missing";
+    console.warn("YouTube API Key or Channel ID is missing. Cannot fetch subscriber count.");
+    return;
+  }
+  try {

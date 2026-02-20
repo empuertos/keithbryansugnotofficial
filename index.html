@@ -49,48 +49,6 @@ form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;c
 .social-cards .card h3{margin:0;font-size:18px;}
 .social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
 
-/* ---------- Thumbnail Carousel for Most Viewed (Removed for Playlist) ---------- */
-/* Ang section na ito ay hindi na kailangan dahil Playlist na ang gagamitin.
-   Pero iniiwan ko lang ang comments dito para sa reference.
-#thumbCarousel{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding:10px 0;
-  scroll-behavior:smooth;
-}
-#thumbCarousel div{
-  flex-shrink:0;
-  position:relative;
-  width:120px;
-  height:68px;
-  cursor:pointer;
-}
-#thumbCarousel img{
-  border-radius:8px;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition: transform 0.3s;
-}
-#thumbCarousel img:hover{transform:scale(1.05);}
-.thumb-title{
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:rgba(0,0,0,0.6);
-  color:#fff;
-  font-size:10px;
-  text-align:center;
-  border-radius:0 0 8px 8px;
-  padding:2px 0;
-  opacity:0;
-  transition:opacity 0.3s;
-}
-#thumbCarousel div:hover .thumb-title{ opacity:1; }
-*/
-
 /* ---------- Footer & Audio ---------- */
 footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 .audio-player{position:fixed;bottom:20px;left:20px;}
@@ -210,4 +168,132 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
       <stop offset="50%" stop-color="#DD2A7B"/>
       <stop offset="100%" stop-color="#515BD4"/>
     </linearGradient>
-    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0
+    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+  </svg>
+  <div>
+    <h3>Instagram</h3>
+    <p id="igFollowers">436 Followers</p>
+  </div>
+</a>
+
+</div>
+</section>
+
+<footer>
+© 2026 Keith Bryan Sugnot. All rights reserved.
+</footer>
+
+<div class="audio-player">
+<audio id="bgMusic" src="background.mp3" controls autoplay loop>
+</div>
+
+<script>
+// ---------- Header Image Switch ----------
+const galleryImgs = document.querySelectorAll("#gallery img");
+const mainImg = document.getElementById("mainHeaderImg");
+let imgIndex = 0;
+function switchHeaderImg(){
+  mainImg.style.opacity = 0;
+  setTimeout(()=>{
+    mainImg.src = galleryImgs[imgIndex].src;
+    mainImg.style.opacity = 1;
+    imgIndex = (imgIndex+1)%galleryImgs.length;
+  },500);
+}
+setInterval(switchHeaderImg,5000);
+
+// ---------- YouTube Video Data (MANUALLY MANAGED) ----------
+// **** IMPORTANT: I-UPDATE ITO MANUALLY ****
+// Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
+let currentLiveVideoId = ""; // Example: "your_live_stream_video_id"
+
+// **** NEW: YouTube Playlist ID for Most Viewed Covers ****
+// Ang Playlist ID mula sa iyong link.
+let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j";
+
+
+// ---------- DOM Elements ----------
+const ytSubsEl = document.getElementById("ytSubs");
+const livePlayer = document.getElementById("livePlayer");
+const liveBanner = document.getElementById("liveBanner");
+
+
+// ---------- Global State ----------
+let currentlyPlayingContent = ""; // Can be a video ID or a playlist ID
+
+// Loads a specific video OR a playlist into the iframe
+function showContent(id, isPlaylist = false) {
+  if (id) {
+    let iframeSrc = "";
+    if (isPlaylist) {
+      // Added playsinline=1 and modestbranding=1 for better compatibility
+      iframeSrc = `https://www.youtube.com/embed/videoseries?list=${id}&autoplay=1&playsinline=1&modestbranding=1`;
+    } else {
+      // Added playsinline=1 and modestbranding=1 for better compatibility
+      iframeSrc = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&modestbranding=1`;
+    }
+    livePlayer.src = iframeSrc;
+    currentlyPlayingContent = id;
+  } else {
+    livePlayer.src = "";
+    currentlyPlayingContent = "";
+  }
+}
+
+// ---------- Manual Live URLs for Other Platforms ----------
+const liveUrls = {
+  youtube: "", // Handled by showLive('youtube') logic
+  // IMPORTANT: Replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.
+  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  // IMPORTANT: Replace "YOUR_TIKTOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's TikTok Live stream.
+  tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
+};
+
+function showLive(platform) {
+  // Clear any existing player content and hide banner before processing new platform
+  livePlayer.src = "";
+  liveBanner.style.display = "none";
+  currentlyPlayingContent = ""; // Reset currently playing content
+
+  if (platform === "youtube") {
+    if (currentLiveVideoId) { // Check if there's a manual live video ID
+      showContent(currentLiveVideoId, false); // Play the live video
+      liveBanner.style.display = "block"; // Show LIVE banner
+    } else if (mostViewedPlaylistId) { // If no live, play the most viewed playlist
+      showContent(mostViewedPlaylistId, true); // Play the playlist
+      // liveBanner remains hidden
+    } else {
+      livePlayer.src = ""; // Clear player if no live and no playlist
+      // Optional: alert or display message if nothing to show
+      alert("No YouTube Live or Most Viewed Playlist is currently set.");
+    }
+  } else {
+    const url = liveUrls[platform];
+    if (url.includes("YOUR_FACEBOOK_LIVE_URL") || url.includes("YOUR_TIKTOK_LIVE_URL") || url === "") {
+        alert(`Please replace "YOUR_${platform.toUpperCase()}_LIVE_URL" in the code with the actual embed URL for ${platform} live. If no live, ensure the URL is correct for embedded content.`);
+        livePlayer.src = "";
+    } else {
+        livePlayer.src = url;
+    }
+    // No banner for other platforms automatically
+  }
+}
+
+// ---------- Initialize Content on Load ----------
+function initializeContent() {
+  // --- Manual YouTube Subscriber Count ---
+  ytSubsEl.innerText = "1.92K Subscribers"; // Naka-set na ito sa 1.92K Subscribers
+
+  // --- Initial Content Display ---
+  showLive('youtube'); // Start by attempting to show YouTube live or the playlist
+}
+
+// Call initializeContent when the page loads
+document.addEventListener('DOMContentLoaded', initializeContent);
+
+// Image switching can remain frequent as it doesn't use API
+setInterval(switchHeaderImg,5000);
+
+</script>
+</body>
+</html>

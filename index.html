@@ -49,7 +49,9 @@ form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;c
 .social-cards .card h3{margin:0;font-size:18px;}
 .social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
 
-/* ---------- Thumbnail Carousel for Most Viewed ---------- */
+/* ---------- Thumbnail Carousel for Most Viewed (Removed for Playlist) ---------- */
+/* Ang section na ito ay hindi na kailangan dahil Playlist na ang gagamitin.
+   Pero iniiwan ko lang ang comments dito para sa reference.
 #thumbCarousel{
   display:flex;
   gap:10px;
@@ -87,6 +89,7 @@ form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;c
   transition:opacity 0.3s;
 }
 #thumbCarousel div:hover .thumb-title{ opacity:1; }
+*/
 
 /* ---------- Footer & Audio ---------- */
 footer{text-align:center;padding:20px;background:#111;color:#aaa;}
@@ -116,8 +119,10 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 
 <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
 
-<h3>🎬 Most Viewed Covers</h3>
-<div id="thumbCarousel"></div>
+<!-- Nagbago na ang heading dahil playlist na ang gagamitin -->
+<h3>🎶 Playlist Covers</h3>
+<!-- Inalis na ang div na may id="thumbCarousel" dahil hindi na ito kailangan sa playlist setup -->
+
 </section>
 
 <!-- ---------- Donation ---------- -->
@@ -205,88 +210,4 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
       <stop offset="50%" stop-color="#DD2A7B"/>
       <stop offset="100%" stop-color="#515BD4"/>
     </linearGradient>
-    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
-  </svg>
-  <div>
-    <h3>Instagram</h3>
-    <p id="igFollowers">436 Followers</p>
-  </div>
-</a>
-
-</div>
-</section>
-
-<footer>
-© 2026 Keith Bryan Sugnot. All rights reserved.
-</footer>
-
-<div class="audio-player">
-<audio id="bgMusic" src="background.mp3" controls autoplay loop>
-</div>
-
-<script>
-// ---------- Header Image Switch ----------
-const galleryImgs = document.querySelectorAll("#gallery img");
-const mainImg = document.getElementById("mainHeaderImg");
-let imgIndex = 0;
-function switchHeaderImg(){
-  mainImg.style.opacity = 0;
-  setTimeout(()=>{
-    mainImg.src = galleryImgs[imgIndex].src;
-    mainImg.style.opacity = 1;
-    imgIndex = (imgIndex+1)%galleryImgs.length;
-  },500);
-}
-setInterval(switchHeaderImg,5000);
-
-// ---------- YouTube Video Data (MANUALLY MANAGED) ----------
-// **** IMPORTANT: I-UPDATE ITO MANUALLY ****
-// Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
-let currentLiveVideoId = ""; // Example: "your_live_stream_video_id"
-
-// Listahan ng Most Viewed Covers. Palitan ang mga video IDs at titles ng ACTWAL na covers ni Keith Bryan Sugnot.
-let popularVideos = [
-  "dQw4w9WgXcQ", // Example: Rick Astley - Never Gonna Give Up
-  "P-E0G30mC_4", // Example: Queen - Bohemian Rhapsody (Cover)
-  "fJ9rUzIMcZQ", // Example: Leonard Cohen - Hallelujah (Cover)
-  "xvFZjo5PgG0"  // Example: Ed Sheeran - Perfect (Cover)
-];
-let popularVideoTitles = [
-  "Never Gonna Give You Up",
-  "Bohemian Rhapsody Cover",
-  "Hallelujah Cover",
-  "Perfect Cover"
-];
-
-// ---------- DOM Elements ----------
-const ytSubsEl = document.getElementById("ytSubs");
-const livePlayer = document.getElementById("livePlayer");
-const liveBanner = document.getElementById("liveBanner");
-const thumbCarousel = document.getElementById("thumbCarousel");
-
-// ---------- Global State ----------
-let currentlyPlayingVideoId = ""; // Track what's currently in the iframe
-
-// Loads a specific video into the iframe
-function showVideo(videoId) {
-  if (videoId) {
-    livePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-    currentlyPlayingVideoId = videoId;
-  } else {
-    livePlayer.src = "";
-    currentlyPlayingVideoId = "";
-  }
-}
-
-// Populates the carousel with thumbnails of popular videos
-function populateThumbnailCarousel() {
-  thumbCarousel.innerHTML = ""; // Clear existing thumbnails
-  if (popularVideos.length === 0) {
-    thumbCarousel.innerHTML = "<p style='text-align:center; color:#ccc;'>No popular videos set up yet.</p>";
-    return;
-  }
-  popularVideos.forEach((vidId, idx) => {
-    const thumbDiv = document.createElement("div");
-    const imgEl = document.createElement("img");
-    imgEl.src = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
-    imgEl.alt = popularVideoTitles[idx] || "YouTube Video Thumbnail"; // Add alt
+    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0

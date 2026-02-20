@@ -213,7 +213,7 @@ setInterval(switchHeaderImg,5000);
 // ---------- YouTube Video Data (MANUALLY MANAGED) ----------
 // **** IMPORTANT: I-UPDATE ITO MANUALLY ****
 // Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
-let currentLiveVideoId = "g15Wst_TU8g"; // <--- Updated to your provided Live Video ID
+let currentLiveVideoId = ""; // <--- Updated to your provided Live Video ID
 
 // **** NEW: YouTube Playlist ID for Most Viewed Covers ****
 // Ang Playlist ID mula sa iyong link.
@@ -279,7 +279,7 @@ function showLive(platform) {
       // liveBanner remains hidden
     } else {
       livePlayer.src = ""; // Clear player if no live and no playlist
-      // Optional: alert or display message if nothing to show
+      console.error("No YouTube Live or Most Viewed Playlist is currently set."); // Ito ang idinagdag
       alert("No YouTube Live or Most Viewed Playlist is currently set.");
     }
   } else {
@@ -292,6 +292,11 @@ function showLive(platform) {
     }
   }
 }
+
+// Ipakita ang YouTube playlist pagkatapos mag-load ang page
+window.onload = function() {
+  showLive('youtube');
+};
 </script>
 
 </body>

@@ -135,7 +135,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>YouTube</h3>
-    <p id="ytSubs">Loading...</p> <!-- This will be manually updated by JS -->
+    <p id="ytSubs">1.92K Subscribers</p> <!-- DIREKTA NANG NAKALAGAY DITO ANG SUBSCRIBER COUNT -->
   </div>
 </a>
 
@@ -176,4 +176,113 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
       <stop offset="50%" stop-color="#DD2A7B"/>
       <stop offset="100%" stop-color="#515BD4"/>
     </linearGradient>
-    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 
+    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+  </svg>
+  <div>
+    <h3>Instagram</h3>
+    <p id="igFollowers">436 Followers</p>
+  </div>
+</a>
+
+</div>
+</section>
+
+<footer>
+© 2026 Keith Bryan Sugnot. All rights reserved.
+</footer>
+
+<div class="audio-player">
+<audio id="bgMusic" src="background.mp3" controls autoplay loop>
+</div>
+
+<script>
+// ---------- Header Image Switch ----------
+const galleryImgs = document.querySelectorAll("#gallery img");
+const mainImg = document.getElementById("mainHeaderImg");
+let imgIndex = 0;
+function switchHeaderImg(){
+  mainImg.style.opacity = 0;
+  setTimeout(()=>{
+    mainImg.src = galleryImgs[imgIndex].src;
+    mainImg.style.opacity = 1;
+    imgIndex = (imgIndex+1)%galleryImgs.length;
+  },500);
+}
+setInterval(switchHeaderImg,5000);
+
+// ---------- YouTube Video Data (MANUALLY MANAGED) ----------
+// **** IMPORTANT: I-UPDATE ITO MANUALLY ****
+// Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
+let currentLiveVideoId = "g15Wst_TU8g"; // <--- Updated to your provided Live Video ID
+
+// **** NEW: YouTube Playlist ID for Most Viewed Covers ****
+// Ang Playlist ID mula sa iyong link.
+let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j";
+
+
+// ---------- DOM Elements ----------
+// Hindi na kailangan i-reference ang ytSubsEl kung direkta na sa HTML ang text
+const livePlayer = document.getElementById("livePlayer");
+const liveBanner = document.getElementById("liveBanner");
+
+
+// ---------- Global State ----------
+let currentlyPlayingContent = ""; // Can be a video ID or a playlist ID
+
+// Loads a specific video OR a playlist into the iframe
+function showContent(id, isPlaylist = false) {
+  if (id) {
+    livePlayer.style.opacity = 0; // Fade out current video
+
+    setTimeout(() => {
+      let iframeSrc = "";
+      if (isPlaylist) {
+        iframeSrc = `https://www.youtube.com/embed/videoseries?list=${id}&autoplay=1&playsinline=1&modestbranding=1`;
+      } else {
+        iframeSrc = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&modestbranding=1`;
+      }
+      livePlayer.src = iframeSrc;
+      currentlyPlayingContent = id;
+
+      livePlayer.style.opacity = 1;
+    }, 300); // 300ms delay for fade out effect
+  } else {
+    livePlayer.style.opacity = 0; // Fade out
+    setTimeout(() => {
+      livePlayer.src = "";
+      currentlyPlayingContent = "";
+    }, 300);
+  }
+}
+
+// ---------- Manual Live URLs for Other Platforms ----------
+const liveUrls = {
+  youtube: "", // Handled by showLive('youtube') logic
+  // IMPORTANT: Replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.
+  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  // IMPORTANT: Replace "YOUR_TIKTOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's TikTok Live stream.
+  tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
+};
+
+function showLive(platform) {
+  // Clear any existing player content and hide banner before processing new platform
+  livePlayer.src = "";
+  liveBanner.style.display = "none";
+  currentlyPlayingContent = ""; // Reset currently playing content
+
+  if (platform === "youtube") {
+    if (currentLiveVideoId) { // Check if there's a manual live video ID
+      showContent(currentLiveVideoId, false); // Play the live video
+      liveBanner.style.display = "block"; // Show LIVE banner
+    } else if (mostViewedPlaylistId) { // If no live, play the most viewed playlist
+      showContent(mostViewedPlaylistId, true); // Play the playlist
+      // liveBanner remains hidden
+    } else {
+      livePlayer.src = ""; // Clear player if no live and no playlist
+      // Optional: alert or display message if nothing to show
+      alert("No YouTube Live or Most Viewed Playlist is currently set.");
+    }
+  } else {
+    const url = liveUrls[platform];
+    if (url.includes("YOUR_FACEBOOK_LIVE_URL") || url.includes("YOUR_TIKTOK_LIVE_URL") || url === "") {
+        alert(`Please replace "YOUR_${platform.toUpperCase()}_LIVE

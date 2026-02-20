@@ -5,6 +5,7 @@
 <title>Keith Bryan Sugnot | Official Website</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+/* CSS styles para sa page */
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff;}
 header{position:relative;padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298);}
 header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff;transition:opacity 1s;}
@@ -12,6 +13,7 @@ section{padding:40px 20px;max-width:1000px;margin:auto;}
 h1,h2{margin:10px 0;}
 
 /* ---------- Live Tabs ---------- */
+/* Styles para sa mga tabs (Playlist, YouTube, Facebook, TikTok) */
 #liveTabs{margin-bottom:15px;text-align:center;}
 #liveTabs button{padding:10px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;cursor:pointer;transition:0.3s;}
 #liveTabs button:hover{background:#1e3c72;}
@@ -20,14 +22,14 @@ iframe{
   height:315px;
   border:none;
   border-radius:10px;
-  /* NEW: Para mas smooth ang transition */
-  transition: opacity 0.3s ease-in-out; /* Mas mabilis na transition */
-  opacity: 1; /* Default visible */
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
 }
 
 /* ---------- LIVE Banner ---------- */
+/* Style para sa banner na lumalabas kapag may live stream sa YouTube */
 #liveBanner{
-  display:none; /* It will be displayed if currentLiveVideoId is set */
+  display:none; /* Nakatago by default */
   background:#FF0000;
   color:#fff;
   text-align:center;
@@ -75,7 +77,8 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🔴 Live Performance</h2>
 <div id="liveTabs">
-  <button onclick="showLive('playlist')">Playlist Covers</button>
+  <!-- Mga buttons para sa iba't ibang platform -->
+  <button onclick="showLive('playlist')">Playlist Covers</button> <!-- Default tab -->
   <button onclick="showLive('youtube')">YouTube</button>
   <button onclick="showLive('facebook')">Facebook</button>
   <button onclick="showLive('tiktok')">TikTok</button>
@@ -84,6 +87,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <!-- LIVE banner -->
 <div id="liveBanner">🔴 LIVE Now on YouTube!</div>
 
+<!-- Iframe kung saan lumalabas ang video -->
 <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
 
 </section>
@@ -194,106 +198,108 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 
 <script>
 // ---------- Header Image Switch ----------
+// Ito ay para palitan ang image sa header kada 5 seconds
 const galleryImgs = document.querySelectorAll("#gallery img");
 const mainImg = document.getElementById("mainHeaderImg");
 let imgIndex = 0;
+
 function switchHeaderImg(){
-  mainImg.style.opacity = 0;
+  mainImg.style.opacity = 0; // Fade out
   setTimeout(()=>{
-    mainImg.src = galleryImgs[imgIndex].src;
-    mainImg.style.opacity = 1;
-    imgIndex = (imgIndex+1)%galleryImgs.length;
+    mainImg.src = galleryImgs[imgIndex].src; // Palitan ng bagong image
+    mainImg.style.opacity = 1; // Fade in
+    imgIndex = (imgIndex+1)%galleryImgs.length; // Pumunta sa susunod na image
   },500);
 }
-setInterval(switchHeaderImg,5000);
+setInterval(switchHeaderImg,5000); // Palitan kada 5 seconds
 
 // ---------- YouTube Video Data (MANUALLY MANAGED) ----------
-// **** IMPORTANT: I-UPDATE ITO MANUALLY ****
-// Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
-let currentLiveVideoId = "";
-
-// **** NEW: YouTube Playlist ID for Most Viewed Covers ****
-// Ang Playlist ID mula sa iyong link.
-let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j";
-
+// Dito mo i-eedit ang mga YouTube video IDs
+let currentLiveVideoId = "g15Wst_TU8g"; // Palitan ng YouTube Live Video ID kung may live stream
+let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j"; // Palitan ng YouTube Playlist ID
 
 // ---------- DOM Elements ----------
-const livePlayer = document.getElementById("livePlayer");
-const liveBanner = document.getElementById("liveBanner");
-
+// Kunin ang mga HTML elements na kailangan
+const livePlayer = document.getElementById("livePlayer"); // Iframe para sa video
+const liveBanner = document.getElementById("liveBanner"); // Banner na lumalabas kapag may live stream
 
 // ---------- Global State ----------
-let currentlyPlayingContent = "";
+let currentlyPlayingContent = ""; // Current na video na nagpe-play
 
-// Loads a specific video OR a playlist into the iframe
+// ---------- Function: showContent() ----------
+// Ito ay para ipakita ang video sa iframe
 function showContent(id, isPlaylist = false) {
   if (id) {
-    livePlayer.style.opacity = 0;
+    livePlayer.style.opacity = 0; // Fade out current video
 
     setTimeout(() => {
       let iframeSrc = "";
       if (isPlaylist) {
-        iframeSrc = `https://www.youtube.com/embed/videoseries?list=${id}&autoplay=1&playsinline=1&modestbranding=1`;
+        iframeSrc = `https://www.youtube.com/embed/videoseries?list=${id}&autoplay=1&playsinline=1&modestbranding=1`; // Para sa playlist
       } else {
-        iframeSrc = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&modestbranding=1`;
+        iframeSrc = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&modestbranding=1`; // Para sa individual video
       }
-      livePlayer.src = iframeSrc;
+      livePlayer.src = iframeSrc; // Palitan ang source ng iframe
       currentlyPlayingContent = id;
 
-      livePlayer.style.opacity = 1;
+      livePlayer.style.opacity = 1; // Fade in ang bagong video
     }, 300);
   } else {
-    livePlayer.style.opacity = 0;
+    livePlayer.style.opacity = 0; // Fade out
     setTimeout(() => {
-      livePlayer.src = "";
+      livePlayer.src = ""; // Tanggalin ang source ng iframe
       currentlyPlayingContent = "";
     }, 300);
   }
 }
 
 // ---------- Manual Live URLs for Other Platforms ----------
+// Dito mo i-eedit ang mga URLs para sa Facebook at TikTok
 const liveUrls = {
-  youtube: "", // Handled by showLive('youtube') logic
-  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
-  tiktok: "https://www.tiktok.com/embed/ZSmaRvv7L"
+  youtube: "", // Hindi na kailangan dito kasi handled na sa ibang logic
+  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560", // Palitan ng Facebook Live URL
+  tiktok: "https://www.tiktok.com/embed/ZSmaRvv7L" // Palitan ng TikTok URL
 };
 
+// ---------- Function: showLive() ----------
+// Ito ay para ipakita ang live stream o playlist depende sa piniling platform
 function showLive(platform) {
-  // Clear any existing player content and hide banner before processing new platform
+  // I-reset ang player
   livePlayer.src = "";
   liveBanner.style.display = "none";
-  currentlyPlayingContent = ""; // Reset currently playing content
+  currentlyPlayingContent = "";
 
-  if (platform === "playlist") { // Para sa Playlist Covers
+  if (platform === "playlist") { // Kung ang pinili ay Playlist Covers
     if (mostViewedPlaylistId) {
-      showContent(mostViewedPlaylistId, true);
+      showContent(mostViewedPlaylistId, true); // Ipakita ang playlist
     } else {
       livePlayer.src = "";
       console.error("No Most Viewed Playlist is currently set.");
       alert("No Most Viewed Playlist is currently set.");
     }
-  } else if (platform === "youtube") {
-    if (currentLiveVideoId) { // Check if there's a manual live video ID
-      showContent(currentLiveVideoId, false); // Play the live video
-      liveBanner.style.display = "block"; // Show LIVE banner
+  } else if (platform === "youtube") { // Kung ang pinili ay YouTube
+    if (currentLiveVideoId) {
+      showContent(currentLiveVideoId, false); // Ipakita ang live stream
+      liveBanner.style.display = "block"; // Ipakita ang LIVE banner
     } else {
-      showLive('playlist'); // Kung walang live, ipakita ang playlist
       liveBanner.style.display = "none"; // Itago ang LIVE banner
+      showLive('playlist'); // Kung walang live stream, ipakita ang playlist
     }
-  } else {
+  } else { // Para sa Facebook at TikTok
     const url = liveUrls[platform];
     if (url.includes("YOUR_FACEBOOK_LIVE_URL") || url.includes("YOUR_TIKTOK_LIVE_URL") || url === "") {
         alert(`Please replace "YOUR_${platform.toUpperCase()}_LIVE_URL" with the actual URL of Keith Bryan Sugnot's ${platform} Live stream.`);
     } else {
-      livePlayer.src = url; // Load Facebook or TikTok URL
-      currentlyPlayingContent = platform; // Update currently playing content
+      livePlayer.src = url; // Ipakita ang Facebook o TikTok URL
+      currentlyPlayingContent = platform;
     }
   }
 }
 
-// Ipakita ang YouTube playlist pagkatapos mag-load ang page
+// ---------- Event Listener: window.onload ----------
+// Ito ay para ipakita ang playlist pagkatapos mag-load ang page
 window.onload = function() {
-  showLive('playlist'); // Ito ang unang lalabas
+  showLive('playlist'); // Ipakita ang playlist bilang default
 };
 </script>
 

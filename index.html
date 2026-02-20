@@ -101,9 +101,9 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <h2>🔴 Live Performance</h2>
 <div id="liveTabs">
   <button onclick="showLive('playlist')">Playlist Covers</button>
-  <button onclick="showLive('youtube')" id="youtubeTab">YouTube</button>
-  <button onclick="showLive('facebook')" id="facebookTab">Facebook</button>
-  <button onclick="showLive('tiktok')" id="tiktokTab">TikTok</button>
+  <button onclick="showLive('youtube')">YouTube</button>
+  <button onclick="showLive('facebook')">Facebook</button>
+  <button onclick="showLive('tiktok')">TikTok</button>
 </div>
 
 <!-- LIVE banner -->
@@ -203,4 +203,105 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
       <stop offset="0%" stop-color="#F58529"/>
       <stop offset="50%" stop-color="#DD2A7B"/>
       <stop offset="100%" stop-color="#515BD4"/>
+    </linearGradient>
+    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
   </svg>
+  <div>
+    <h3>Instagram</h3>
+    <p id="igFollowers">436 Followers</p>
+  </div>
+</a>
+
+</div>
+</section>
+
+<footer>
+© 2026 Keith Bryan Sugnot. All rights reserved.
+</footer>
+
+<div class="audio-player">
+<audio id="bgMusic" src="background.mp3" controls autoplay loop>
+</div>
+
+<script>
+// ---------- Header Image Switch ----------
+const galleryImgs = document.querySelectorAll("#gallery img");
+const mainImg = document.getElementById("mainHeaderImg");
+let imgIndex = 0;
+
+function switchHeaderImg(){
+  mainImg.style.opacity = 0;
+  setTimeout(()=>{
+    mainImg.src = galleryImgs[imgIndex].src;
+    mainImg.style.opacity = 1;
+    imgIndex = (imgIndex+1)%galleryImgs.length;
+  },500);
+}
+setInterval(switchHeaderImg,5000);
+
+// ---------- YouTube Video Data ----------
+let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j"; // Para sa Playlist ID
+let channelId = "UC13X4zA6-9aLegj9KUmEQgg"; // Channel ID ni Keith
+
+// ---------- DOM Elements ----------
+const liveBanner = document.getElementById("liveBanner");
+const livePlayer = document.getElementById("livePlayer");
+
+// ---------- Function: showLive() ----------
+function showLive(platform) {
+   if (platform === "youtube") {
+    // Gamitin ang YouTube API para hanapin ang live stream
+    getLiveStream(channelId);
+    } else if (platform === "playlist") {
+    livePlayer.src = `https://www.youtube.com/embed/videoseries?list=${mostViewedPlaylistId}&autoplay=1&playsinline=1&modestbranding=1`;
+    }
+     else {
+    const url = liveUrls[platform];
+    if (url.includes("YOUR_FACEBOOK_LIVE_URL")) {
+        alert(`Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`);
+    } else if (platform === "tiktok") {
+      window.open("https://www.tiktok.com/@kenken20.03", '_blank'); // Palitan ng TikTok profile URL
+    } else {
+      window.location.href = url; // Redirect to the platform
+    }
+  }
+}
+
+const liveUrls = {
+  youtube: "",
+  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  tiktok: "" // WALANG URL DAHIL LALABAS SA BAGONG TAB
+};
+
+// Function para hanapin ang live stream
+function getLiveStream(channelId) {
+  const apiKey = "YOUR_API_KEY"; // Palitan ng API key mo
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&eventType=live&channelId=${channelId}&type=video&key=${apiKey}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data.items.length > 0) {
+        // May nakitang live stream
+        const liveVideoId = data.items[0].id.videoId;
+        livePlayer.src = `https://www.youtube.com/embed/${liveVideoId}?autoplay=1&playsinline=1&modestbranding=1`;
+        liveBanner.style.display = "block";
+      } else {
+        // Walang live stream
+        livePlayer.src = `https://www.youtube.com/embed/videoseries?list=${mostViewedPlaylistId}&autoplay=1&playsinline=1&modestbranding=1`;
+        liveBanner.style.display = "none";
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching live stream:", error);
+    });
+}
+
+// ---------- Initialize Playlist ----------
+window.onload = function() {
+  showLive('playlist');
+};
+</script>
+
+</body>
+</html>

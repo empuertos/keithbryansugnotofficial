@@ -75,7 +75,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🔴 Live Performance</h2>
 <div id="liveTabs">
-  <button onclick="showLive('playlist')">Playlist Covers</button> <!-- Ito ang idinagdag at ginawang una -->
+  <button onclick="showLive('playlist')">Playlist Covers</button>
   <button onclick="showLive('youtube')">YouTube</button>
   <button onclick="showLive('facebook')">Facebook</button>
   <button onclick="showLive('tiktok')">TikTok</button>
@@ -85,10 +85,6 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <div id="liveBanner">🔴 LIVE Now on YouTube!</div>
 
 <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
-
-<!-- Nagbago na ang heading dahil playlist na ang gagamitin -->
-<h3>🎶 Playlist Covers</h3>
-<!-- Inalis na ang div na may id="thumbCarousel" dahil hindi na ito kailangan sa playlist setup -->
 
 </section>
 
@@ -136,7 +132,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>YouTube</h3>
-    <p id="ytSubs">1.92K Subscribers</p> <!-- DIREKTA NANG NAKALAGAY DITO ANG SUBSCRIBER COUNT -->
+    <p id="ytSubs">1.92K Subscribers</p>
   </div>
 </a>
 
@@ -214,7 +210,7 @@ setInterval(switchHeaderImg,5000);
 // ---------- YouTube Video Data (MANUALLY MANAGED) ----------
 // **** IMPORTANT: I-UPDATE ITO MANUALLY ****
 // Kung may LIVE stream, ilagay ang YouTube Video ID nito dito. Kung wala, iwanang "" (empty string).
-let currentLiveVideoId = ""; // <--- Updated to your provided Live Video ID
+let currentLiveVideoId = "";
 
 // **** NEW: YouTube Playlist ID for Most Viewed Covers ****
 // Ang Playlist ID mula sa iyong link.
@@ -222,18 +218,17 @@ let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j";
 
 
 // ---------- DOM Elements ----------
-// Hindi na kailangan i-reference ang ytSubsEl kung direkta na sa HTML ang text
 const livePlayer = document.getElementById("livePlayer");
 const liveBanner = document.getElementById("liveBanner");
 
 
 // ---------- Global State ----------
-let currentlyPlayingContent = ""; // Can be a video ID or a playlist ID
+let currentlyPlayingContent = "";
 
 // Loads a specific video OR a playlist into the iframe
 function showContent(id, isPlaylist = false) {
   if (id) {
-    livePlayer.style.opacity = 0; // Fade out current video
+    livePlayer.style.opacity = 0;
 
     setTimeout(() => {
       let iframeSrc = "";
@@ -246,9 +241,9 @@ function showContent(id, isPlaylist = false) {
       currentlyPlayingContent = id;
 
       livePlayer.style.opacity = 1;
-    }, 300); // 300ms delay for fade out effect
+    }, 300);
   } else {
-    livePlayer.style.opacity = 0; // Fade out
+    livePlayer.style.opacity = 0;
     setTimeout(() => {
       livePlayer.src = "";
       currentlyPlayingContent = "";
@@ -259,9 +254,7 @@ function showContent(id, isPlaylist = false) {
 // ---------- Manual Live URLs for Other Platforms ----------
 const liveUrls = {
   youtube: "", // Handled by showLive('youtube') logic
-  // IMPORTANT: Replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.
   facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
-  // IMPORTANT: Replace "YOUR_TIKTOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's TikTok Live stream.
   tiktok: "https://www.tiktok.com/embed/ZSmaRvv7L"
 };
 

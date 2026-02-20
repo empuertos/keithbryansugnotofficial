@@ -249,16 +249,16 @@ const livePlayer = document.getElementById("livePlayer");
 
 // ---------- Function: showLive() ----------
 function showLive(platform) {
-   if (platform === "youtube") {
-    // Gamitin ang YouTube API para hanapin ang live stream
-    getLiveStream(channelId);
-    } else if (platform === "playlist") {
+  if (platform === "youtube") {
+    livePlayer.src = "https://www.youtube.com/embed/QCl3w0yPnf8";
+    liveBanner.style.display = "block";
+  } else if (platform === "playlist") {
     livePlayer.src = `https://www.youtube.com/embed/videoseries?list=${mostViewedPlaylistId}&autoplay=1&playsinline=1&modestbranding=1`;
-    }
-     else {
+    liveBanner.style.display = "none";
+  } else {
     const url = liveUrls[platform];
     if (url.includes("YOUR_FACEBOOK_LIVE_URL")) {
-        alert(`Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`);
+      alert(`Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`);
     } else if (platform === "tiktok") {
       window.open("https://www.tiktok.com/@kenken20.03", '_blank'); // Palitan ng TikTok profile URL
     } else {
@@ -267,39 +267,9 @@ function showLive(platform) {
   }
 }
 
-const liveUrls = {
-  youtube: "",
-  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
-  tiktok: "" // WALANG URL DAHIL LALABAS SA BAGONG TAB
-};
-
-// Function para hanapin ang live stream
-function getLiveStream(channelId) {
-  const apiKey = "YOUR_API_KEY"; // Palitan ng API key mo
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&eventType=live&channelId=${channelId}&type=video&key=${apiKey}`;
-
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if (data.items.length > 0) {
-        // May nakitang live stream
-        const liveVideoId = data.items[0].id.videoId;
-        livePlayer.src = `https://www.youtube.com/embed/${liveVideoId}?autoplay=1&playsinline=1&modestbranding=1`;
-        liveBanner.style.display = "block";
-      } else {
-        // Walang live stream
-        livePlayer.src = `https://www.youtube.com/embed/videoseries?list=${mostViewedPlaylistId}&autoplay=1&playsinline=1&modestbranding=1`;
-        liveBanner.style.display = "none";
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching live stream:", error);
-    });
-}
-
 // ---------- Initialize Playlist ----------
-window.onload = function() {
-  showLive('playlist');
+window.onload = function () {
+  showLive("playlist");
 };
 </script>
 

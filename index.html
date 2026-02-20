@@ -251,34 +251,4 @@ const liveBanner = document.getElementById("liveBanner");
 // IMPORTANT: Replace these with actual YouTube video IDs and their corresponding titles
 // from Keith Bryan Sugnot's most viewed covers.
 // Example values are provided.
-let popularVideos = ["dQw4w9WgXcQ", "P-E0G30mC_4", "fJ9rUzIMcZQ", "xvFZjo5PgG0"];
-let popularVideoTitles = ["Never Gonna Give You Up", "Bohemian Rhapsody Cover", "Hallelujah Cover", "Perfect Cover"];
-let currentIndex = 0;
-const thumbCarousel = document.getElementById("thumbCarousel");
-
-// Loads a specific popular video into the iframe
-function showPopularVideo(idx) {
-  currentIndex = idx;
-  livePlayer.src = `https://www.youtube.com/embed/${popularVideos[idx]}?autoplay=1`;
-  currentVideoId = popularVideos[idx]; // Update currentVideoId when a popular video is played
-  liveBanner.style.display = "none"; // Hide live banner if showing a popular video
-}
-
-// Populates the carousel with thumbnails of popular videos
-function populateThumbnailCarousel() {
-  thumbCarousel.innerHTML = "";
-  if (popularVideos.length === 0) {
-    thumbCarousel.innerHTML = "<p style='text-align:center; color:#ccc;'>No popular videos set up yet.</p>";
-    return;
-  }
-  popularVideos.forEach((vidId, idx) => {
-    const thumbDiv = document.createElement("div");
-    const imgEl = document.createElement("img");
-    imgEl.src = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
-    const titleEl = document.createElement("div");
-    titleEl.className = "thumb-title";
-    titleEl.innerText = popularVideoTitles[idx] || "Video Title"; // Fallback title
-    thumbDiv.appendChild(imgEl);
-    thumbDiv.appendChild(titleEl);
-    thumbDiv.onclick = () => {
-      
+let popularVideos = ["dQw4w9WgXcQ", "P-E0G30mC_4", "fJ9rUzIMcZQ", "xvFZjo5Pg

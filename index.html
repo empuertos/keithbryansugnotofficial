@@ -5,186 +5,63 @@
 <title>Keith Bryan Sugnot | Official Website</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/* CSS styles para sa page - RESPONSIVE */
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0f0f0f;
-  color: #fff;
-}
-
-header {
-  position: relative;
-  padding: 40px;
-  text-align: center;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-}
-
-header img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid #fff;
-  transition: opacity 1s;
-  max-width: 100%; /* Para responsive */
-}
-
-section {
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-h1, h2 {
-  margin: 10px 0;
-}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff;}
+header{position:relative;padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298);}
+header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff;transition:opacity 1s;}
+section{padding:40px 20px;max-width:1000px;margin:auto;}
+h1,h2{margin:10px 0;}
 
 /* ---------- Live Tabs ---------- */
-#liveTabs {
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-#liveTabs button {
-  padding: 10px 20px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 5px;
-  background: #2a5298;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#liveTabs button:hover {
-  background: #1e3c72;
-}
-
-iframe {
-  width: 100%;
-  height: 315px;
-  border: none;
-  border-radius: 10px;
+#liveTabs{margin-bottom:15px;text-align:center;}
+#liveTabs button{padding:10px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;cursor:pointer;transition:0.3s;}
+#liveTabs button:hover{background:#1e3c72;}
+#livePlayer{
+  width:100%;
+  height:315px;
+  border:none;
+  border-radius:10px;
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
 }
 
 /* ---------- LIVE Banner ---------- */
-#liveBanner {
-  display: none;
-  background: #FF0000;
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-  padding: 5px 0;
-  border-radius: 5px;
-  margin-bottom: 10px;
+#liveBanner{
+  display:none;
+  background:#FF0000;
+  color:#fff;
+  text-align:center;
+  font-weight:bold;
+  padding:5px 0;
+  border-radius:5px;
+  margin-bottom:10px;
 }
 
 /* ---------- Support / Donation ---------- */
-#donationSection {
-  margin-top: 20px;
-  padding: 15px;
-  background: #1a1a1a;
-  border-radius: 10px;
-  text-align: center;
-}
+#donationSection{margin-top:20px;padding:15px;background:#1a1a1a;border-radius:10px;text-align:center;}
 
 /* ---------- Booking / Contact ---------- */
-form input,
-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 5px;
-}
-
-form button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  background: #2a5298;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-}
+form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px;}
+form button{padding:12px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px;cursor:pointer;}
 
 /* ---------- Gallery ---------- */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.gallery img {
-  width: 100%;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.3s;
-  max-width: 100%; /* Para responsive */
-}
-
-.gallery img:hover {
-  transform: scale(1.05);
-}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px;}
+.gallery img{width:100%;border-radius:10px;cursor:pointer;transition: transform 0.3s;}
+.gallery img:hover{transform:scale(1.05);}
 
 /* ---------- Social Media ---------- */
-.social-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px 0;
-}
-
-.social-cards .card {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: #1a1a1a;
-  border-radius: 12px;
-  padding: 15px;
-  text-decoration: none;
-  color: #fff;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.social-cards .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.social-cards .card svg {
-  flex-shrink: 0;
-  width: 50px;
-  height: 50px;
-}
-
-.social-cards .card h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.social-cards .card p {
-  margin: 2px 0 0 0;
-  font-size: 14px;
-  color: #ccc;
-}
+.social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
+.social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
+.social-cards .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+.social-cards .card svg{flex-shrink:0;width:50px;height:50;}
+.social-cards .card h3{margin:0;font-size:18px;}
+.social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
 
 /* ---------- Footer & Audio ---------- */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #111;
-  color: #aaa;
-}
-
-.audio-player {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
+footer{text-align:center;padding:20px;background:#111;color:#aaa;}
+.audio-player{
+  position:fixed;
+  bottom:20px;
+  left:20px;
   display: none; /* Naka-hide */
 }
 
@@ -204,7 +81,7 @@ footer {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
-  iframe {
+  #livePlayer {
     height: 200px; /* Bawasan ang height sa mobile */
   }
 }
@@ -232,7 +109,14 @@ footer {
 <!-- LIVE banner -->
 <div id="liveBanner">🔴 LIVE Now on YouTube!</div>
 
-<iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+<iframe
+  id="livePlayer"
+  width="100%"
+  height="315"
+  src="https://www.youtube.com/embed/videoseries?list=PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j"
+  frameborder="0"
+  allowfullscreen
+></iframe>
 
 </section>
 
@@ -288,7 +172,7 @@ footer {
 <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
   <svg viewBox="0 0 24 24" width="50" height="50">
     <defs>
-      <linearGradient id="tiktokGrad" x1="0" y1="0" x2="1" y2="1">
+      <linearGradient id="tiktokGrad" x1="0%" y1="0%" x2="1" y2="1">
         <stop offset="0%" stop-color="#69C9D0"/>
         <stop offset="50%" stop-color="#EE1D52"/>
         <stop offset="100%" stop-color="#000"/>
@@ -357,83 +241,39 @@ function switchHeaderImg(){
 setInterval(switchHeaderImg,5000);
 
 // ---------- YouTube Video Data ----------
-let currentLiveVideoId = "g15Wst_TU8g";
-let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j";
+let currentLiveVideoId = ""; // Para sa Live Video ID
+let mostViewedPlaylistId = "PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j"; // Para sa Playlist ID
 
 // ---------- DOM Elements ----------
-const livePlayer = document.getElementById("livePlayer");
 const liveBanner = document.getElementById("liveBanner");
+const livePlayer = document.getElementById("livePlayer");
 
-// ---------- Global State ----------
-let currentlyPlayingContent = "";
-
-// ---------- Function: showContent() ----------
-function showContent(id, isPlaylist = false) {
-  if (id) {
-    livePlayer.style.opacity = 0;
-
-    setTimeout(() => {
-      let iframeSrc = "";
-      if (isPlaylist) {
-        iframeSrc = `https://www.youtube.com/embed/videoseries?list=${id}&autoplay=1&playsinline=1&modestbranding=1`;
-      } else {
-        iframeSrc = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&modestbranding=1`;
-      }
-      livePlayer.src = iframeSrc;
-      currentlyPlayingContent = id;
-
-      livePlayer.style.opacity = 1;
-    }, 300);
-  } else {
-    livePlayer.style.opacity = 0;
-    setTimeout(() => {
-      livePlayer.src = "";
-      currentlyPlayingContent = "";
-    }, 300);
-  }
-}
-
-// ---------- Manual Live URLs for Other Platforms ----------
-const liveUrls = {
-  youtube: "",
-  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
-  tiktok: "" // WALANG URL DAHIL LALABAS SA BAGONG TAB
-};
-
+// ---------- Function: showLive() ----------
 function showLive(platform) {
-  livePlayer.src = "";
-  liveBanner.style.display = "none";
-  currentlyPlayingContent = "";
-
-  if (platform === "playlist") {
-    if (mostViewedPlaylistId) {
-      showContent(mostViewedPlaylistId, true);
-    } else {
-      livePlayer.src = "";
-      console.error("No Most Viewed Playlist is currently set.");
-      alert("No Most Viewed Playlist is currently set.");
+   if (platform === "youtube") {
+    livePlayer.src =  `https://www.youtube.com/embed/${currentLiveVideoId}?autoplay=1&playsinline=1&modestbranding=1`;
+    } else if (platform === "playlist") {
+    livePlayer.src = `https://www.youtube.com/embed/videoseries?list=${mostViewedPlaylistId}&autoplay=1&playsinline=1&modestbranding=1`;
     }
-  } else if (platform === "youtube") {
-    if (currentLiveVideoId) {
-      showContent(currentLiveVideoId, false);
-      liveBanner.style.display = "block";
-    } else {
-      liveBanner.style.display = "none";
-      showLive('playlist');
-    }
-  } else {
+     else {
     const url = liveUrls[platform];
     if (url.includes("YOUR_FACEBOOK_LIVE_URL")) {
         alert(`Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`);
     } else if (platform === "tiktok") {
       window.open("https://www.tiktok.com/@kenken20.03", '_blank'); // Palitan ng TikTok profile URL
     } else {
-      livePlayer.src = url;
-      currentlyPlayingContent = platform;
+      window.location.href = url; // Redirect to the platform
     }
   }
 }
 
+const liveUrls = {
+  youtube: "",
+  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  tiktok: "" // WALANG URL DAHIL LALABAS SA BAGONG TAB
+};
+
+// ---------- Initialize Playlist ----------
 window.onload = function() {
   showLive('playlist');
 };

@@ -140,6 +140,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </div>
 
 <script>
+// ---------- Header auto switch ----------
 const galleryImgs=document.querySelectorAll("#gallery img");
 const mainImg=document.getElementById("mainHeaderImg");
 let imgIndex=0;
@@ -153,7 +154,7 @@ function switchHeaderImg(){
 }
 setInterval(switchHeaderImg,5000);
 
-// ---------- YouTube Auto Live + Most Viewed ----------
+// ---------- YouTube Live + Most Viewed ----------
 const YT_API_KEY="AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
 const CHANNEL_ID="UCefBEmdYeUm65g9LXWkTFrw";
 const ytSubsEl=document.getElementById("ytSubs");
@@ -189,17 +190,22 @@ function populateThumbnailCarousel(){
 document.getElementById("prevThumb").onclick=()=>{thumbCarouselEl.scrollBy({left:-130,behavior:'smooth'});};
 document.getElementById("nextThumb").onclick=()=>{thumbCarouselEl.scrollBy({left:130,behavior:'smooth'});};
 
-// Switch video
+// Switch video (fixed always loading)
 function switchToVideo(videoId,isLive=false){
   if(videoId!==currentVideoId){
     videoPreloader.style.display="flex";
     livePlayer.style.opacity=0.4;
     liveOverlayText.style.display=isLive?"block":"none";
+
+    // iframe src with autoplay & mute for instant play
+    livePlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0&modestbranding=1`;
+    currentVideoId=videoId;
+
+    // Preloader timeout
     setTimeout(()=>{
-      livePlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      currentVideoId=videoId;
-      livePlayer.onload=()=>{videoPreloader.style.display="none";livePlayer.style.opacity=1;};
-    },300);
+      videoPreloader.style.display="none";
+      livePlayer.style.opacity=1;
+    },2000);
   }
 }
 
@@ -212,7 +218,7 @@ async function updateYTStats(){
   }catch(e){ytSubsEl.innerText="N/A";}
 }
 
-// Fetch live video or most viewed
+// Fetch live or most viewed
 async function fetchVideos(){
   try{
     const liveRes=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
@@ -223,7 +229,6 @@ async function fetchVideos(){
       switchToVideo(liveVideoId,true);
     } else {
       liveBanner.style.display="none";
-      // fetch most viewed
       const topRes=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=viewCount&maxResults=10&key=${YT_API_KEY}`);
       const topData=await topRes.json();
       popularVideos=topData.items.map(item=>item.id.videoId);
@@ -234,6 +239,7 @@ async function fetchVideos(){
   }catch(e){console.error(e);}
 }
 
+// Init
 async function initYT(){
   updateYTStats();
   fetchVideos();

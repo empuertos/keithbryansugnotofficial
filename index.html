@@ -281,15 +281,3 @@ function populateThumbnailCarousel() {
       showPopularVideo(idx);
       livePlayer.scrollIntoView({ behavior: 'smooth' });
     };
-    thumbCarousel.appendChild(thumbDiv);
-  });
-}
-
-// ---------- Update YouTube Stats ----------
-async function updateYTStats() {
-  if (!YT_API_KEY || !CHANNEL_ID) {
-    ytSubsEl.innerText = "API Key/Channel ID Missing";
-    console.warn("YouTube API Key or Channel ID is missing. Cannot fetch subscriber count.");
-    return;
-  }
-  try {

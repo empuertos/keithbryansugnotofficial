@@ -261,7 +261,7 @@ const liveUrls = {
   // IMPORTANT: Replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.
   facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
   // IMPORTANT: Replace "YOUR_TIKTOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's TikTok Live stream.
-  tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
+  tiktok: "https://www.tiktok.com/embed/ZSmaRvv7L"
 };
 
 function showLive(platform) {
@@ -285,4 +285,14 @@ function showLive(platform) {
   } else {
     const url = liveUrls[platform];
     if (url.includes("YOUR_FACEBOOK_LIVE_URL") || url.includes("YOUR_TIKTOK_LIVE_URL") || url === "") {
-        alert(`Please replace "YOUR_${platform.toUpperCase()}_LIVE
+        alert(`Please replace "YOUR_${platform.toUpperCase()}_LIVE_URL" with the actual URL of Keith Bryan Sugnot's ${platform} Live stream.`);
+    } else {
+      livePlayer.src = url; // Load Facebook or TikTok URL
+      currentlyPlayingContent = platform; // Update currently playing content
+    }
+  }
+}
+</script>
+
+</body>
+</html>

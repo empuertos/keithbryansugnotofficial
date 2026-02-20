@@ -2,76 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Keith Bryan Sugnot | Official Website</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keith Bryan Sugnot | Official Website</title>
 
 <style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff}
-header{padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298)}
-header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff}
+body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
+header{text-align:center;padding:40px;background:linear-gradient(135deg,#1e3c72,#2a5298)}
+header img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:5px solid #fff}
 section{padding:40px 20px;max-width:1000px;margin:auto}
-h1,h2{margin:10px 0}
-.social a{display:inline-block;margin:8px;padding:10px 16px;border:1px solid #555;border-radius:6px;color:#fff;text-decoration:none}
+h2{text-align:center}
+iframe{width:100%;height:315;border-radius:12px;border:none}
+.gallery img{width:100%;border-radius:12px;display:none}
+.gallery img.active{display:block}
+.social a{display:inline-block;margin:8px;padding:10px 15px;border:1px solid #555;border-radius:6px;color:#fff;text-decoration:none}
 .social a:hover{background:#2a5298}
-iframe{width:100%;height:315;border-radius:10px;border:none}
-.gallery{position:relative;max-width:500px;margin:auto}
-.gallery img{width:100%;border-radius:15px;display:none}
-.gallery img.active{display:block;transition:0.5s}
-form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px}
-form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px}
-footer{text-align:center;padding:20px;background:#111;color:#aaa}
+footer{text-align:center;padding:20px;background:#111}
 </style>
-
 </head>
 <body>
 
-<!-- HEADER IMAGE (STATIC) -->
 <header>
-<img src="main_photo.jpg" alt="Keith Bryan Sugnot">
+<img src="main_photo.jpg" alt="Keith">
 <h1>Keith Bryan Sugnot</h1>
-<h2>Event Singer • Live & Cover Songs</h2>
-<p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
+<p>Event Singer • Live & Cover Songs</p>
 </header>
 
-<!-- LATEST VIDEO SECTION -->
 <section>
-<h2>🔴 Latest Performance</h2>
-<div id="liveStatus">Loading latest video...</div>
+<h2>🔥 Most Viewed Performance</h2>
+<div id="liveStatus">Loading...</div>
 <iframe id="ytPlayer" allowfullscreen></iframe>
 </section>
 
-<!-- SOCIAL MEDIA LINKS -->
-<section>
-<h2>🌐 Social Media</h2>
-<div class="social">
-<a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">YouTube</a>
-<a href="https://www.tiktok.com/@kenken20.03" target="_blank">TikTok</a>
-<a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank">Facebook</a>
-<a href="https://www.instagram.com/kentotieeee" target="_blank">Instagram</a>
-</div>
-</section>
-
-<!-- DONATION PLACEHOLDER -->
-<section>
-<h2>💸 Support / Donation</h2>
-<p><strong>COMING SOON</strong></p>
-<p>GCash • Maya • QR Code will be available soon.</p>
-</section>
-
-<!-- CONTACT FORM -->
-<section>
-<h2>📩 Booking / Contact</h2>
-<p>Email: <strong>sugnotk@gmail.com</strong></p>
-<form action="https://formsubmit.co/sugnotk@gmail.com" method="POST">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="text" name="contact" placeholder="Contact Number" required>
-<input type="text" name="event" placeholder="Event Type">
-<textarea name="message" placeholder="Message"></textarea>
-<button type="submit">Send Inquiry</button>
-</form>
-</section>
-
-<!-- GALLERY SECTION (SLIDESHOW) -->
 <section>
 <h2>🖼 Gallery</h2>
 <div class="gallery" id="gallery">
@@ -81,50 +42,112 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 </div>
 </section>
 
+<section>
+<h2>🌐 Social Media</h2>
+<div class="social">
+<a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">YouTube</a>
+<a href="https://www.facebook.com" target="_blank">Facebook</a>
+<a href="https://www.instagram.com" target="_blank">Instagram</a>
+</div>
+</section>
+
+<section>
+<h2>📩 Booking</h2>
+<form action="https://formsubmit.co/sugnotk@gmail.com" method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="text" name="contact" placeholder="Contact Number" required>
+<textarea name="message" placeholder="Message"></textarea>
+<button type="submit">Send</button>
+</form>
+</section>
+
 <footer>
-© 2026 Keith Bryan Sugnot. All rights reserved.
+© 2026 Keith Bryan Sugnot
 </footer>
 
 <script>
-// 🔥 GALLERY SLIDESHOW
-const galleryImages = document.querySelectorAll("#gallery img");
-let validGallery = [];
+/* ===========================
+   🔥 YOUTUBE MOST VIEWED
+   WITH CACHE SYSTEM
+=========================== */
 
-galleryImages.forEach(img => {
-  img.onerror = () => img.remove(); // remove broken images
-  img.onload = () => {
-    validGallery.push(img);
-    if(validGallery.length === 1) startGallerySlideshow();
-  };
-});
+const API_KEY = "ILAGAY_DITO_BAGONG_API_KEY_MO";
+const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
 
-function startGallerySlideshow() {
-  if(validGallery.length <= 1) return;
-  let index = 0;
-  setInterval(() => {
-    validGallery[index].classList.remove("active");
-    index = (index + 1) % validGallery.length;
-    validGallery[index].classList.add("active");
-  }, 3000);
+const ytPlayer = document.getElementById("ytPlayer");
+const liveStatusEl = document.getElementById("liveStatus");
+
+const CACHE_KEY = "ytMostViewedCache";
+const CACHE_DURATION = 6 * 60 * 60 * 1000;
+
+function loadCache(){
+    const cached = localStorage.getItem(CACHE_KEY);
+    if(!cached) return null;
+    const data = JSON.parse(cached);
+    if(Date.now() - data.time < CACHE_DURATION){
+        return data;
+    }
+    return null;
 }
 
-// 🔴 AUTO LATEST YOUTUBE VIDEO (No API key needed)
-const channelId = "UCefBEmdYeUm65g9LXWkTFrw";
-const fallbackVideo = "dQw4w9WgXcQ"; // default video
-const liveStatusEl = document.getElementById("liveStatus");
-const ytPlayer = document.getElementById("ytPlayer");
+function saveCache(video){
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+        ...video,
+        time: Date.now()
+    }));
+}
 
-fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)
-.then(res => res.text())
-.then(data => {
-  const videoId = data.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1] || fallbackVideo;
-  ytPlayer.src = "https://www.youtube.com/embed/" + videoId;
-  liveStatusEl.innerHTML = "Latest Performance on YouTube";
-})
-.catch(()=>{
-  ytPlayer.src = "https://www.youtube.com/embed/" + fallbackVideo;
-  liveStatusEl.innerHTML = "Showing Featured Video";
-});
+async function fetchMostViewed(){
+    const res = await fetch(
+    `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=viewCount&maxResults=1&type=video`
+    );
+    const data = await res.json();
+    const video = data.items[0];
+    return {
+        id: video.id.videoId,
+        title: video.snippet.title
+    };
+}
+
+async function initVideo(){
+    const cached = loadCache();
+
+    if(cached){
+        ytPlayer.src = "https://www.youtube.com/embed/" + cached.id;
+        liveStatusEl.innerHTML = cached.title;
+        fetchMostViewed().then(fresh => saveCache(fresh));
+    } else {
+        const fresh = await fetchMostViewed();
+        saveCache(fresh);
+        ytPlayer.src = "https://www.youtube.com/embed/" + fresh.id;
+        liveStatusEl.innerHTML = fresh.title;
+    }
+}
+
+initVideo();
+
+/* ===========================
+   🖼 GALLERY SLIDESHOW
+=========================== */
+
+const images = document.querySelectorAll("#gallery img");
+let index = 0;
+if(images.length > 0){
+    images[0].classList.add("active");
+    setInterval(()=>{
+        images[index].classList.remove("active");
+        index = (index+1) % images.length;
+        images[index].classList.add("active");
+    },3000);
+}
+
+/* ===========================
+   🚀 SERVICE WORKER
+=========================== */
+
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js');
+}
 </script>
 
 </body>

@@ -81,20 +81,40 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🌐 Social Media</h2>
 <div class="social-cards">
+<!-- YouTube -->
 <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
-  <svg><!-- YouTube SVG icon --></svg>
+  <svg viewBox="0 0 24 24" fill="#FF0000" width="50" height="50">
+    <path d="M10 15l5-3-5-3v6z"/><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.7-.8-2.1-.9C15.3 5 12 5 12 5h0s-3.3 0-6.9.1c-.4 0-1.3 0-2.1.9-.6.6-.8 2-.8 2S2 9.7 2 11.4v1.2c0 1.7.2 3.4.2 3.4s.2 1.4.8 2c.8.8 1.9.8 2.4.9 1.7.1 7.3.1 7.3.1s3.3 0 6.9-.1c.4 0 1.3 0 2.1-.9.6-.6.8-2 .8-2s.2-1.7.2-3.4v-1.2c0-1.7-.2-3.4-.2-3.4z"/>
+  </svg>
   <div><h3>YouTube</h3><p id="ytSubs">Subscribers</p></div>
 </a>
+
+<!-- TikTok -->
 <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
-  <svg><!-- TikTok SVG icon --></svg>
+  <svg viewBox="0 0 24 24" fill="#010101" width="50" height="50">
+    <path d="M12 2v16c-4-0.5-7-3-7-7 0-2 1-4 3-5v6h4V2h0z"/>
+  </svg>
   <div><h3>TikTok</h3><p id="ttFollowers">Followers</p></div>
 </a>
+
+<!-- Facebook -->
 <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card">
-  <svg><!-- Facebook SVG icon --></svg>
+  <svg viewBox="0 0 24 24" fill="#1877F2" width="50" height="50">
+    <path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.5 9.9v-7h-2.5v-2.9h2.5v-2.2c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6v1.8h2.9l-.5 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/>
+  </svg>
   <div><h3>Facebook</h3><p id="fbFollowers">Followers</p></div>
 </a>
+
+<!-- Instagram -->
 <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card">
-  <svg><!-- Instagram SVG icon --></svg>
+  <svg viewBox="0 0 24 24" width="50" height="50">
+    <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F58529"/>
+      <stop offset="50%" stop-color="#DD2A7B"/>
+      <stop offset="100%" stop-color="#515BD4"/>
+    </linearGradient>
+    <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+  </svg>
   <div><h3>Instagram</h3><p id="igFollowers">Followers</p></div>
 </a>
 </div>
@@ -127,7 +147,6 @@ setInterval(switchHeaderImg,5000);
 const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
 const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
 const ytSubsEl = document.getElementById("ytSubs");
-
 let currentVideoId = "";
 const livePlayer = document.getElementById("livePlayer");
 
@@ -151,7 +170,6 @@ async function updateLiveVideo(){
       const fallbackData = await fallbackRes.json();
       videoId = fallbackData.items[0].id.videoId;
     }
-    // Only update iframe if videoId changed
     if(videoId !== currentVideoId){
       livePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
       currentVideoId = videoId;
@@ -162,12 +180,12 @@ async function updateLiveVideo(){
 // Run on load + intervals
 updateLiveVideo();
 updateYTStats();
-setInterval(updateLiveVideo,60000); // Check every 60 sec
-setInterval(updateYTStats,120000); // Update subs every 2 min
+setInterval(updateLiveVideo,60000);
+setInterval(updateYTStats,120000);
 
 // ---------- Manual Live URLs ----------
 const liveUrls = {
-  youtube: "", // handled automatically
+  youtube: "", // auto-handled
   facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
   tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
 };
@@ -175,7 +193,7 @@ const liveUrls = {
 // ---------- Show live by tab ----------
 function showLive(platform){
   if(platform==="youtube"){
-    updateLiveVideo(); // always refresh YouTube auto live
+    updateLiveVideo(); 
   } else {
     livePlayer.src = liveUrls[platform];
   }

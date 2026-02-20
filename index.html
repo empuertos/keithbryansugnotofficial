@@ -127,6 +127,8 @@ setInterval(switchHeaderImg,5000);
 const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
 const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
 const ytSubsEl = document.getElementById("ytSubs");
+
+let currentVideoId = "";
 const livePlayer = document.getElementById("livePlayer");
 
 async function updateYTStats(){
@@ -141,28 +143,31 @@ async function updateLiveVideo(){
   try{
     const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
     const data = await res.json();
+    let videoId;
     if(data.items.length>0){
-      const liveId = data.items[0].id.videoId;
-      livePlayer.src = `https://www.youtube.com/embed/${liveId}?autoplay=1`;
+      videoId = data.items[0].id.videoId;
     } else {
-      // fallback latest video
       const fallbackRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=date&maxResults=1&key=${YT_API_KEY}`);
       const fallbackData = await fallbackRes.json();
-      const latestId = fallbackData.items[0].id.videoId;
-      livePlayer.src = `https://www.youtube.com/embed/${latestId}?autoplay=1`;
+      videoId = fallbackData.items[0].id.videoId;
+    }
+    // Only update iframe if videoId changed
+    if(videoId !== currentVideoId){
+      livePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      currentVideoId = videoId;
     }
   } catch(e){console.error(e);}
 }
 
-// Run on load + every 60 sec
+// Run on load + intervals
 updateLiveVideo();
 updateYTStats();
-setInterval(updateLiveVideo,60000);
-setInterval(updateYTStats,120000);
+setInterval(updateLiveVideo,60000); // Check every 60 sec
+setInterval(updateYTStats,120000); // Update subs every 2 min
 
 // ---------- Manual Live URLs ----------
 const liveUrls = {
-  youtube: "", // auto-handled
+  youtube: "", // handled automatically
   facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
   tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
 };

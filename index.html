@@ -10,27 +10,87 @@ header{position:relative;padding:40px;text-align:center;background:linear-gradie
 header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff;transition:opacity 1s;}
 section{padding:40px 20px;max-width:1000px;margin:auto;}
 h1,h2{margin:10px 0;}
+
+/* ---------- Live Tabs ---------- */
 #liveTabs{margin-bottom:15px;text-align:center;}
 #liveTabs button{padding:10px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;cursor:pointer;transition:0.3s;}
 #liveTabs button:hover{background:#1e3c72;}
-#thumbCarousel{display:flex;gap:10px;overflow-x:auto;padding:10px 0;}
-#thumbCarousel div{flex-shrink:0;}
-#thumbCarousel img{border-radius:8px;transition:transform 0.3s;cursor:pointer;}
-#thumbCarousel img:hover{transform:scale(1.05);}
+iframe{width:100%;height:315px;border:none;border-radius:10px;}
+
+/* ---------- LIVE Banner ---------- */
+#liveBanner{
+  display:none;
+  background:#FF0000;
+  color:#fff;
+  text-align:center;
+  font-weight:bold;
+  padding:5px 0;
+  border-radius:5px;
+  margin-bottom:10px;
+}
+
+/* ---------- Support / Donation ---------- */
+#donationSection{margin-top:20px;padding:15px;background:#1a1a1a;border-radius:10px;text-align:center;}
+
+/* ---------- Booking / Contact ---------- */
+form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px;}
+form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px;cursor:pointer;}
+
+/* ---------- Gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px;}
+.gallery img{width:100%;border-radius:10px;cursor:pointer;transition: transform 0.3s;}
+.gallery img:hover{transform:scale(1.05);}
+
+/* ---------- Social Media ---------- */
 .social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
 .social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
 .social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
 .social-cards .card svg{flex-shrink:0;width:50px;height:50px;}
 .social-cards .card h3{margin:0;font-size:18px;}
 .social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
-form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px;}
-form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px;cursor:pointer;}
+
+/* ---------- Thumbnail Carousel for Most Viewed ---------- */
+#thumbCarousel{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:10px 0;
+  scroll-behavior:smooth;
+}
+#thumbCarousel div{
+  flex-shrink:0;
+  position:relative;
+  width:120px;
+  height:68px;
+  cursor:pointer;
+}
+#thumbCarousel img{
+  border-radius:8px;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform 0.3s;
+}
+#thumbCarousel img:hover{transform:scale(1.05);}
+.thumb-title{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.6);
+  color:#fff;
+  font-size:10px;
+  text-align:center;
+  border-radius:0 0 8px 8px;
+  padding:2px 0;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+#thumbCarousel div:hover .thumb-title{ opacity:1; }
+
+/* ---------- Footer & Audio ---------- */
 footer{text-align:center;padding:20px;background:#111;color:#aaa;}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px;}
-.gallery img{width:100%;border-radius:10px;cursor:pointer;transition: transform 0.3s;}
-.gallery img:hover{transform:scale(1.05);}
-.audio-player{position:fixed;bottom:20px;left:20px;z-index:100;}
-.live-warning{position:fixed;top:20px;right:20px;background:red;color:#fff;padding:10px 20px;border-radius:8px;display:none;z-index:1000;}
+.audio-player{position:fixed;bottom:20px;left:20px;}
 </style>
 </head>
 <body>
@@ -42,6 +102,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
 </header>
 
+<!-- ---------- Live Performance ---------- -->
 <section>
 <h2>🔴 Live Performance</h2>
 <div id="liveTabs">
@@ -49,22 +110,25 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   <button onclick="showLive('facebook')">Facebook</button>
   <button onclick="showLive('tiktok')">TikTok</button>
 </div>
-<div style="text-align:center;margin-bottom:10px;">
-<button onclick="prevVideo()">⏮️ Previous</button>
-<button onclick="nextVideo()">⏭️ Next</button>
-</div>
-<iframe id="livePlayer" width="100%" height="360" frameborder="0" allowfullscreen></iframe>
+
+<!-- LIVE banner -->
+<div id="liveBanner">🔴 LIVE Now on YouTube!</div>
+
+<iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+
+<h3>🎬 Most Viewed Covers</h3>
 <div id="thumbCarousel"></div>
-<div class="live-warning" id="liveWarning">🔴 LIVE NOW!</div>
 </section>
 
-<section style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:10px; text-align:center;">
+<!-- ---------- Donation ---------- -->
+<section id="donationSection">
 <h2>💸 Support / Donation</h2>
 <p><strong>COMING SOON</strong></p>
 <p>GCash • Maya • QR Code will be available soon.</p>
 </section>
 
-<section style="margin-top:20px;">
+<!-- ---------- Booking / Contact ---------- -->
+<section>
 <h2>📩 Booking / Contact</h2>
 <p>Email: <strong>sugnotk@gmail.com</strong></p>
 <form action="https://formsubmit.co/sugnotk@gmail.com" method="POST">
@@ -76,6 +140,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </form>
 </section>
 
+<!-- ---------- Gallery ---------- -->
 <section>
 <h2>🖼 Gallery</h2>
 <div class="gallery" id="gallery">
@@ -86,10 +151,12 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </div>
 </section>
 
+<!-- ---------- Social Media ---------- -->
 <section>
 <h2>🌐 Social Media</h2>
 <div class="social-cards">
 
+<!-- YouTube -->
 <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
   <svg viewBox="0 0 24 24" width="50" height="50">
     <rect width="24" height="24" rx="4" ry="4" fill="#FF0000"/>
@@ -101,6 +168,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </div>
 </a>
 
+<!-- TikTok -->
 <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
   <svg viewBox="0 0 24 24" width="50" height="50">
     <defs>
@@ -118,6 +186,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </div>
 </a>
 
+<!-- Facebook -->
 <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card">
   <svg viewBox="0 0 24 24" fill="#1877F2" width="50" height="50">
     <path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.5 9.9v-7h-2.5v-2.9h2.5v-2.2c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6v1.8h2.9l-.5 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/>
@@ -128,6 +197,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </div>
 </a>
 
+<!-- Instagram -->
 <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card">
   <svg viewBox="0 0 24 24" width="50" height="50">
     <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -155,110 +225,103 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </div>
 
 <script>
-// ---------- Header Image Carousel ----------
-const galleryImgs=document.querySelectorAll("#gallery img");
-const mainImg=document.getElementById("mainHeaderImg");
-let imgIndex=0;
+// ---------- Header Image Switch ----------
+const galleryImgs = document.querySelectorAll("#gallery img");
+const mainImg = document.getElementById("mainHeaderImg");
+let imgIndex = 0;
 function switchHeaderImg(){
-  mainImg.style.opacity=0;
+  mainImg.style.opacity = 0;
   setTimeout(()=>{
-    mainImg.src=galleryImgs[imgIndex].src;
-    mainImg.style.opacity=1;
-    imgIndex=(imgIndex+1)%galleryImgs.length;
+    mainImg.src = galleryImgs[imgIndex].src;
+    mainImg.style.opacity = 1;
+    imgIndex = (imgIndex+1)%galleryImgs.length;
   },500);
 }
 setInterval(switchHeaderImg,5000);
 
-// ---------- YouTube Live + Most Viewed ----------
-const YT_API_KEY="AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
-const CHANNEL_ID="UCefBEmdYeUm65g9LXWkTFrw";
-const ytSubsEl=document.getElementById("ytSubs");
-const livePlayer=document.getElementById("livePlayer");
-const liveWarningEl=document.getElementById("liveWarning");
+// ---------- YouTube API ----------
+const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
+const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
+const ytSubsEl = document.getElementById("ytSubs");
+let currentVideoId = "";
+const livePlayer = document.getElementById("livePlayer");
+const liveBanner = document.getElementById("liveBanner");
 
-let popularVideos=[], popularVideoTitles=[], currentIndex=0, isLive=false;
+// ---------- Most Viewed Videos ----------
+let popularVideos = ["VIDEO_ID1","VIDEO_ID2","VIDEO_ID3","VIDEO_ID4"];
+let popularVideoTitles = ["Cover 1","Cover 2","Cover 3","Cover 4"];
+let currentIndex=0;
+const thumbCarousel = document.getElementById("thumbCarousel");
 
-// Cache helper
-function setCache(key,obj){ localStorage.setItem(key,JSON.stringify(obj)); }
-function getCache(key){ return JSON.parse(localStorage.getItem(key)); }
-
-// Update subscriber count
-async function updateYTStats(){
-  try{
-    const res=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
-    const data=await res.json();
-    ytSubsEl.innerText=parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
-  }catch(e){ ytSubsEl.innerText="N/A"; }
-}
-
-// Show popular video
 function showPopularVideo(idx){
-  const vidId=popularVideos[idx];
-  livePlayer.src=`https://www.youtube.com/embed/${vidId}?autoplay=1`;
+  currentIndex=idx;
+  livePlayer.src=`https://www.youtube.com/embed/${popularVideos[idx]}?autoplay=1`;
 }
 
-// Next / Prev buttons
-function nextVideo(){ currentIndex=(currentIndex+1)%popularVideos.length; showPopularVideo(currentIndex); }
-function prevVideo(){ currentIndex=(currentIndex-1+popularVideos.length)%popularVideos.length; showPopularVideo(currentIndex); }
-
-// Populate thumbnail carousel
-const thumbCarousel=document.getElementById("thumbCarousel");
+// Populate carousel with YouTube thumbnails
 function populateThumbnailCarousel(){
   thumbCarousel.innerHTML="";
   popularVideos.forEach((vidId,idx)=>{
-    const thumbUrl=`https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
     const thumbDiv=document.createElement("div");
-    thumbDiv.style.minWidth="120px";
-    thumbDiv.style.cursor="pointer";
-    thumbDiv.innerHTML=`<img src="${thumbUrl}">`;
-    thumbDiv.onclick=()=>{ currentIndex=idx; showPopularVideo(currentIndex); livePlayer.scrollIntoView({behavior:'smooth'}); };
+    const imgEl=document.createElement("img");
+    imgEl.src=`https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+    const titleEl=document.createElement("div");
+    titleEl.className="thumb-title";
+    titleEl.innerText=popularVideoTitles[idx];
+    thumbDiv.appendChild(imgEl);
+    thumbDiv.appendChild(titleEl);
+    thumbDiv.onclick=()=>{ showPopularVideo(idx); livePlayer.scrollIntoView({behavior:'smooth'}); };
     thumbCarousel.appendChild(thumbDiv);
   });
 }
 
-// Load live or popular fast
-async function loadLiveOrPopular(){
+// ---------- Update YouTube Stats ----------
+async function updateYTStats(){
   try{
-    const liveRes=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
-    const liveData=await liveRes.json();
-    if(liveData.items.length>0){
-      livePlayer.src=`https://www.youtube.com/embed/${liveData.items[0].id.videoId}?autoplay=1`;
-      isLive=true;
-      liveWarningEl.style.display="block";
-    }else{
-      isLive=false;
-      liveWarningEl.style.display="none";
-      const cached=getCache("popularVideos");
-      if(cached){ popularVideos=cached.videos; popularVideoTitles=cached.titles; showPopularVideo(currentIndex); populateThumbnailCarousel(); return; }
-      const popRes=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=viewCount&maxResults=10&key=${YT_API_KEY}`);
-      const data=await popRes.json();
-      popularVideos=data.items.map(i=>i.id.videoId);
-      popularVideoTitles=data.items.map(i=>i.snippet.title);
-      setCache("popularVideos",{videos:popularVideos,titles:popularVideoTitles});
-      showPopularVideo(currentIndex);
-      populateThumbnailCarousel();
-    }
-  }catch(e){ console.error(e); }
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
+    const data = await res.json();
+    ytSubsEl.innerText = parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
+  }catch(e){ytSubsEl.innerText="N/A";}
 }
 
-// Manual live URLs
+// ---------- Update Live Video ----------
+async function updateLiveVideo(){
+  try{
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
+    const data = await res.json();
+    let videoId;
+    if(data.items.length>0){
+      videoId=data.items[0].id.videoId;
+      liveBanner.style.display="block"; // show LIVE banner
+    } else{
+      videoId=popularVideos[currentIndex]; // fallback to most viewed
+      liveBanner.style.display="none"; // hide LIVE banner
+    }
+    if(videoId!==currentVideoId){
+      livePlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      currentVideoId=videoId;
+    }
+  }catch(e){console.error(e);}
+}
+
+// ---------- Manual Live URLs ----------
 const liveUrls={
-  youtube:"",
+  youtube:"", // auto-handled
   facebook:"https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
   tiktok:"https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
 };
 
-// Show live by tab
 function showLive(platform){
-  if(platform==="youtube"){ loadLiveOrPopular(); } 
-  else { livePlayer.src=liveUrls[platform]; liveWarningEl.style.display="none"; }
+  if(platform==="youtube"){ updateLiveVideo(); }
+  else{ livePlayer.src=liveUrls[platform]; }
 }
 
-// Initialize
+// ---------- Initialize ----------
+updateLiveVideo();
 updateYTStats();
-loadLiveOrPopular();
+populateThumbnailCarousel();
+setInterval(updateLiveVideo,60000);
 setInterval(updateYTStats,120000);
-setInterval(loadLiveOrPopular,60000);
 </script>
 
 </body>

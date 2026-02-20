@@ -255,15 +255,18 @@ function showLive(platform) {
   } else if (platform === "playlist") {
     livePlayer.src = `https://www.youtube.com/embed/videoseries?list=${mostViewedPlaylistId}&autoplay=1&playsinline=1&modestbranding=1`;
     liveBanner.style.display = "none";
-  }  else if (platform === "facebook") {
-     livePlayer.src = "https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/v/17z2bKLDij/&show_text=0&width=560";
+  } else if (platform === "facebook") {
+    livePlayer.src =
+      "https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/v/17z2bKLDij/&show_text=0&width=560";
     liveBanner.style.display = "none";
   } else {
     const url = liveUrls[platform];
     if (url.includes("YOUR_FACEBOOK_LIVE_URL")) {
-      alert(`Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`);
+      alert(
+        `Please replace "YOUR_FACEBOOK_LIVE_URL" with the actual URL of Keith Bryan Sugnot's Facebook Live stream.`
+      );
     } else if (platform === "tiktok") {
-      window.open("https://www.tiktok.com/@kenken20.03", '_blank'); // Palitan ng TikTok profile URL
+      window.open("https://www.tiktok.com/@kenken20.03", "_blank"); // Palitan ng TikTok profile URL
     } else {
       window.location.href = url; // Redirect to the platform
     }

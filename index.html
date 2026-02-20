@@ -13,6 +13,7 @@ h1,h2{margin:10px 0;}
 #liveTabs{margin-bottom:15px;text-align:center;}
 #liveTabs button{padding:10px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;cursor:pointer;transition:0.3s;}
 #liveTabs button:hover{background:#1e3c72;}
+#nextVideoBtn{margin-top:10px;padding:10px 20px;background:#2a5298;color:#fff;border:none;border-radius:5px;cursor:pointer;}
 .social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
 .social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
 .social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
@@ -45,6 +46,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   <button onclick="showLive('tiktok')">TikTok</button>
 </div>
 <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+<button id="nextVideoBtn" onclick="nextPopularVideo()">Next Video ▶</button>
 </section>
 
 <section style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:10px; text-align:center;">
@@ -78,7 +80,6 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🌐 Social Media</h2>
 <div class="social-cards">
-
 <!-- YouTube Official -->
 <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
   <svg viewBox="0 0 24 24" width="50" height="50">
@@ -87,7 +88,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>YouTube</h3>
-    <p id="ytSubs">Loading...</p> <!-- Auto-update via API -->
+    <p id="ytSubs">Loading...</p>
   </div>
 </a>
 
@@ -105,7 +106,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>TikTok</h3>
-    <p id="ttFollowers">42.8K Followers</p> <!-- Manual -->
+    <p id="ttFollowers">42.8K Followers</p>
   </div>
 </a>
 
@@ -116,7 +117,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>Facebook</h3>
-    <p id="fbFollowers">5K Followers</p> <!-- Manual -->
+    <p id="fbFollowers">5K Followers</p>
   </div>
 </a>
 
@@ -132,10 +133,9 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   </svg>
   <div>
     <h3>Instagram</h3>
-    <p id="igFollowers">436 Followers</p> <!-- Manual -->
+    <p id="igFollowers">436 Followers</p>
   </div>
 </a>
-
 </div>
 </section>
 
@@ -148,7 +148,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </div>
 
 <script>
-// ---------- Auto-switch header ----------
+// ---------- Header Image Switch ----------
 const galleryImgs = document.querySelectorAll("#gallery img");
 const mainImg = document.getElementById("mainHeaderImg");
 let imgIndex = 0;
@@ -162,13 +162,16 @@ function switchHeaderImg(){
 }
 setInterval(switchHeaderImg,5000);
 
-// ---------- YouTube API Auto Live ----------
+// ---------- YouTube API ----------
 const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
 const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
 const ytSubsEl = document.getElementById("ytSubs");
 let currentVideoId = "";
 const livePlayer = document.getElementById("livePlayer");
+let popularVideos = [];
+let currentIndex = 0;
 
+// Update subscriber count
 async function updateYTStats(){
   try{
     const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
@@ -177,46 +180,60 @@ async function updateYTStats(){
   }catch(e){ytSubsEl.innerText="N/A";}
 }
 
-async function updateLiveVideo(){
+// Load live or popular
+async function loadLiveOrPopular(){
   try{
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
-    const data = await res.json();
-    let videoId;
-    if(data.items.length>0){
-      videoId = data.items[0].id.videoId;
+    // Check live
+    const liveRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${YT_API_KEY}`);
+    const liveData = await liveRes.json();
+    if(liveData.items.length>0){
+      currentVideoId = liveData.items[0].id.videoId;
+      livePlayer.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1`;
     } else {
-      const fallbackRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=date&maxResults=1&key=${YT_API_KEY}`);
-      const fallbackData = await fallbackRes.json();
-      videoId = fallbackData.items[0].id.videoId;
-    }
-    if(videoId !== currentVideoId){
-      livePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      currentVideoId = videoId;
+      // Load popular videos
+      const popRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=viewCount&maxResults=10&key=${YT_API_KEY}`);
+      const popData = await popRes.json();
+      popularVideos = popData.items.map(item=>item.id.videoId);
+      showPopularVideo(0);
     }
   } catch(e){console.error(e);}
 }
 
-// Run on load + intervals
-updateLiveVideo();
-updateYTStats();
-setInterval(updateLiveVideo,60000);
-setInterval(updateYTStats,120000);
+// Show popular video
+function showPopularVideo(index){
+  if(popularVideos.length===0) return;
+  currentIndex = index % popularVideos.length;
+  // Autoplay muted to satisfy browser autoplay policy
+  livePlayer.src = `https://www.youtube.com/embed/${popularVideos[currentIndex]}?autoplay=1&mute=1`;
+}
+
+// Next video button
+function nextPopularVideo(){
+  // Unmute on user interaction
+  showPopularVideo(currentIndex + 1);
+  livePlayer.src += "&mute=0";
+}
 
 // ---------- Manual Live URLs ----------
 const liveUrls = {
-  youtube: "", // auto-handled
   facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
   tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
 };
 
-// ---------- Show live by tab ----------
+// Show live by tab
 function showLive(platform){
   if(platform==="youtube"){
-    updateLiveVideo(); 
+    loadLiveOrPopular();
   } else {
     livePlayer.src = liveUrls[platform];
   }
 }
+
+// Run on load
+loadLiveOrPopular();
+updateYTStats();
+setInterval(updateYTStats,120000);
+setInterval(loadLiveOrPopular,60000);
 </script>
 
 </body>

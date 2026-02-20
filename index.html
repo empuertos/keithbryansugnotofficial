@@ -4,12 +4,34 @@
 <meta charset="UTF-8">
 <title>Keith Bryan Sugnot | Official Website</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff;}
+header{position:relative;padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298);}
+header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff;transition:opacity 1s;}
+section{padding:40px 20px;max-width:1000px;margin:auto;}
+h1,h2{margin:10px 0;}
+#liveTabs{margin-bottom:15px;text-align:center;}
+#liveTabs button{padding:10px 20px;margin:0 5px;border:none;border-radius:5px;background:#2a5298;color:#fff;cursor:pointer;transition:0.3s;}
+#liveTabs button:hover{background:#1e3c72;}
+.social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
+.social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
+.social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+.social-cards .card svg{flex-shrink:0;width:50px;height:50px;}
+.social-cards .card h3{margin:0;font-size:18px;}
+.social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
+form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px;}
+form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px;}
+footer{text-align:center;padding:20px;background:#111;color:#aaa;}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px;}
+.gallery img{width:100%;border-radius:10px;cursor:pointer;transition: transform 0.3s;}
+.gallery img:hover{transform:scale(1.05);}
+.audio-player{position:fixed;bottom:20px;left:20px;}
+</style>
 </head>
 <body>
 
 <header>
-<img src="keith.jpg" alt="Keith Bryan Sugnot">
+<img src="keith1.jpg" alt="Keith Bryan Sugnot" id="mainHeaderImg">
 <h1>Keith Bryan Sugnot</h1>
 <h2>Event Singer • Live & Cover Songs</h2>
 <p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
@@ -17,32 +39,44 @@
 
 <section>
 <h2>🔴 Live Performance</h2>
-<div id="liveStatus">Checking live status...</div>
+<div id="liveTabs">
+  <button onclick="showLive('youtube')">YouTube</button>
+  <button onclick="showLive('facebook')">Facebook</button>
+  <button onclick="showLive('tiktok')">TikTok</button>
+</div>
 
-<!-- Floating YouTube Player -->
-<iframe id="ytPlayer" width="450" height="253" frameborder="0" allowfullscreen></iframe>
-<div id="ytMiniIcon">▶</div>
-<button id="ytCloseBtn">✖ Close</button>
-<button id="ytMinimizeBtn">⬇ Minimize</button>
-
+<iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
 </section>
 
 <section>
-<h2>🌐 Connect with Keith Bryan Sugnot</h2>
+<h2>🌐 Social Media</h2>
 <div class="social-cards">
+<a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
+  <svg><!-- YouTube SVG icon --></svg>
+  <div><h3>YouTube</h3><p id="ytSubs">Subscribers</p></div>
+</a>
+<a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
+  <svg><!-- TikTok SVG icon --></svg>
+  <div><h3>TikTok</h3><p id="ttFollowers">Followers</p></div>
+</a>
+<a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card">
+  <svg><!-- Facebook SVG icon --></svg>
+  <div><h3>Facebook</h3><p id="fbFollowers">Followers</p></div>
+</a>
+<a href="https://www.instagram.com/kentotieeee" target="_blank" class="card">
+  <svg><!-- Instagram SVG icon --></svg>
+  <div><h3>Instagram</h3><p id="igFollowers">Followers</p></div>
+</a>
+</div>
+</section>
 
-  <!-- YouTube Card -->
-  <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card youtube">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="#FF0000">
-      <path d="M19.615 3.184c-1.034-.69-3.66-.705-5.615-.705s-4.581.015-5.615.705c-1.073.717-1.385 2.64-1.385 2.64s-.292 1.923-.292 3.848v2.656c0 1.925.292 3.848.292 3.848s.312 1.923 1.385 2.64c1.034.69 3.66.705 5.615.705s4.581-.015 5.615-.705c1.073-.717 1.385-2.64 1.385-2.64s.292-1.923.292-3.848v-2.656c0-1.925-.292-3.848-.292-3.848s-.312-1.923-1.385-2.64zM10 15.5v-7l6 3.5-6 3.5z"/>
-    </svg>
-    <div>
-      <h3>YouTube</h3>
-      <p>Subscribe for latest covers & performances</p>
-      <p>Subscribers: <span id="ytSubs">Loading...</span></p>
-    </div>
-  </a>
-
+<section>
+<h2>🖼 Gallery</h2>
+<div class="gallery" id="gallery">
+<img src="keith1.jpg">
+<img src="keith2.jpg">
+<img src="keith3.jpg">
+<img src="keith4.jpg">
 </div>
 </section>
 
@@ -58,10 +92,67 @@
 </form>
 </section>
 
+<section>
+<h2>💸 Support / Donation</h2>
+<p><strong>COMING SOON</strong></p>
+<p>GCash • Maya • QR Code will be available soon.</p>
+</section>
+
 <footer>
 © 2026 Keith Bryan Sugnot. All rights reserved.
 </footer>
 
-<script src="script.js"></script>
+<div class="audio-player">
+<audio id="bgMusic" src="background.mp3" controls autoplay loop></audio>
+</div>
+
+<script>
+// ---------- Auto-switch header ----------
+const galleryImgs = document.querySelectorAll("#gallery img");
+const mainImg = document.getElementById("mainHeaderImg");
+let imgIndex = 0;
+function switchHeaderImg(){
+  mainImg.style.opacity = 0;
+  setTimeout(()=>{
+    mainImg.src = galleryImgs[imgIndex].src;
+    mainImg.style.opacity = 1;
+    imgIndex = (imgIndex+1)%galleryImgs.length;
+  },500);
+}
+setInterval(switchHeaderImg,5000);
+
+// ---------- YouTube API ----------
+const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
+const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
+const ytSubsEl = document.getElementById("ytSubs");
+async function updateYT(){
+  try{
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
+    const data = await res.json();
+    ytSubsEl.innerText = parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
+  }catch(e){ytSubsEl.innerText="N/A";}
+}
+updateYT(); setInterval(updateYT,120000);
+
+// ---------- YouTube Live ----------
+const ytPlayerUrl = "https://www.youtube.com/embed/YOUTUBE_VIDEO_ID";
+
+// ---------- Manual Live URLs ----------
+const liveUrls = {
+  youtube: ytPlayerUrl,
+  facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FACEBOOK_LIVE_URL&show_text=0&width=560",
+  tiktok: "https://www.tiktok.com/embed/YOUR_TIKTOK_LIVE_URL"
+};
+
+// ---------- Default live: YouTube ----------
+const livePlayer=document.getElementById("livePlayer");
+livePlayer.src = liveUrls.youtube;
+
+// ---------- Show live by tab ----------
+function showLive(platform){
+  livePlayer.src = liveUrls[platform];
+}
+</script>
+
 </body>
 </html>

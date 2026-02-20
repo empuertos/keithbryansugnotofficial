@@ -4,24 +4,7 @@
 <meta charset="UTF-8">
 <title>Keith Bryan Sugnot | Official Website</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff}
-header{padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298)}
-header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff}
-section{padding:40px 20px;max-width:1000px;margin:auto}
-h1,h2{margin:10px 0}
-.social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
-.social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
-.social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
-.social-cards .card svg{flex-shrink:0;width:50px;height:50px;}
-.social-cards .card h3{margin:0;font-size:18px;}
-.social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
-form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px}
-form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px}
-footer{text-align:center;padding:20px;background:#111;color:#aaa}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px}
-.gallery img{width:100%;border-radius:10px}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -35,7 +18,13 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 <section>
 <h2>🔴 Live Performance</h2>
 <div id="liveStatus">Checking live status...</div>
-<iframe id="ytPlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+
+<!-- Floating YouTube Player -->
+<iframe id="ytPlayer" width="450" height="253" frameborder="0" allowfullscreen></iframe>
+<div id="ytMiniIcon">▶</div>
+<button id="ytCloseBtn">✖ Close</button>
+<button id="ytMinimizeBtn">⬇ Minimize</button>
+
 </section>
 
 <section>
@@ -54,49 +43,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
     </div>
   </a>
 
-  <!-- TikTok Card -->
-  <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card tiktok">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="#000000">
-      <path d="M12 2v17.5a4.5 4.5 0 1 1-4.5-4.5h3V7h3V2h3v5.5h3V2h-3z"/>
-    </svg>
-    <div>
-      <h3>TikTok</h3>
-      <p>Follow for clips & covers</p>
-      <p>Followers: <span id="ttCount">Loading...</span></p>
-    </div>
-  </a>
-
-  <!-- Facebook Card -->
-  <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card facebook">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="#1877F2">
-      <path d="M22 12a10 10 0 1 0-11.625 9.875v-6.987h-2.208V12h2.208V9.797c0-2.182 1.3-3.391 3.29-3.391.953 0 1.948.171 1.948.171v2.142h-1.099c-1.084 0-1.421.674-1.421 1.366V12h2.418l-.386 2.888h-2.032v6.987A10 10 0 0 0 22 12z"/>
-    </svg>
-    <div>
-      <h3>Facebook</h3>
-      <p>Watch live shows & updates</p>
-      <p>Followers: <span id="fbCount">Loading...</span></p>
-    </div>
-  </a>
-
-  <!-- Instagram Card -->
-  <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card instagram">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="#C13584">
-      <path d="M12 2.163c3.204 0 3.584.012 4.849.07 ..."/>
-    </svg>
-    <div>
-      <h3>Instagram</h3>
-      <p>Behind the scenes & photos</p>
-      <p>Followers: <span id="instaCount">Loading...</span></p>
-    </div>
-  </a>
-
 </div>
-</section>
-
-<section>
-<h2>💸 Support / Donation</h2>
-<p><strong>COMING SOON</strong></p>
-<p>GCash • Maya • QR Code will be available soon.</p>
 </section>
 
 <section>
@@ -111,78 +58,10 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa}
 </form>
 </section>
 
-<section>
-<h2>🖼 Gallery</h2>
-<div class="gallery">
-<img src="keith.jpg">
-<img src="keith2.jpg">
-<img src="keith3.jpg">
-</div>
-</section>
-
 <footer>
 © 2026 Keith Bryan Sugnot. All rights reserved.
 </footer>
 
-<script>
-// ---------- YouTube Subscriber Count ----------
-const YT_API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
-const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
-const ytSubsEl = document.getElementById("ytSubs");
-async function updateYT(){
-    try{
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
-        const data = await res.json();
-        ytSubsEl.innerText = parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
-    }catch(e){ytSubsEl.innerText="N/A";console.log(e);}
-}
-updateYT(); setInterval(updateYT,120000);
-
-// ---------- Facebook Followers ----------
-const fbCountEl = document.getElementById("fbCount");
-async function updateFB(){
-  try{
-    // Replace with Graph API fetch
-    fbCountEl.innerText="8.5k"; 
-  }catch(e){fbCountEl.innerText="N/A";}
-}
-updateFB(); setInterval(updateFB,300000);
-
-// ---------- TikTok Followers (Unofficial JSON API) ----------
-const ttCountEl=document.getElementById("ttCount");
-async function updateTT(){
-  try{
-    const res=await fetch("https://www.tiktok.com/@kenken20.03"); // can use unofficial JSON endpoint
-    const html=await res.text();
-    const match=html.match(/"followerCount":(\d+)/);
-    ttCountEl.innerText=match?parseInt(match[1]).toLocaleString():"N/A";
-  }catch(e){ttCountEl.innerText="N/A";}
-}
-updateTT(); setInterval(updateTT,300000);
-
-// ---------- Instagram Followers (Unofficial JSON API) ----------
-const instaCountEl=document.getElementById("instaCount");
-async function updateInsta(){
-  try{
-    const res=await fetch("https://www.instagram.com/kentotieeee/?__a=1");
-    const data=await res.json();
-    const followers=data.graphql.user.edge_followed_by.count;
-    instaCountEl.innerText=parseInt(followers).toLocaleString();
-  }catch(e){instaCountEl.innerText="N/A";}
-}
-updateInsta(); setInterval(updateInsta,300000);
-
-// ---------- YouTube Latest Video Embed ----------
-const ytPlayer=document.getElementById("ytPlayer");
-const liveStatus=document.getElementById("liveStatus");
-fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`)
-.then(res=>res.text())
-.then(data=>{
-  const videoId=data.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1]||"dQw4w9WgXcQ";
-  ytPlayer.src="https://www.youtube.com/embed/"+videoId;
-  liveStatus.innerText="Latest performance";
-});
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

@@ -2,152 +2,186 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keith Bryan Sugnot | Official Website</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
-header{text-align:center;padding:40px;background:linear-gradient(135deg,#1e3c72,#2a5298)}
-header img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:5px solid #fff}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0f0f0f;color:#fff}
+header{padding:40px;text-align:center;background:linear-gradient(135deg,#1e3c72,#2a5298)}
+header img{width:220px;height:220px;border-radius:50%;object-fit:cover;border:5px solid #fff}
 section{padding:40px 20px;max-width:1000px;margin:auto}
-h2{text-align:center}
-iframe{width:100%;height:315;border-radius:12px;border:none}
-.gallery img{width:100%;border-radius:12px;display:none}
-.gallery img.active{display:block}
-.social a{display:inline-block;margin:8px;padding:10px 15px;border:1px solid #555;border-radius:6px;color:#fff;text-decoration:none}
-.social a:hover{background:#2a5298}
-footer{text-align:center;padding:20px;background:#111}
+h1,h2{margin:10px 0}
+.social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px 0;}
+.social-cards .card{display:flex;align-items:center;gap:15px;background:#1a1a1a;border-radius:12px;padding:15px;text-decoration:none;color:#fff;transition: transform 0.3s, box-shadow 0.3s;}
+.social-cards .card:hover{transform: translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+.social-cards .card svg{flex-shrink:0;width:50px;height:50px;}
+.social-cards .card h3{margin:0;font-size:18px;}
+.social-cards .card p{margin:2px 0 0 0;font-size:14px;color:#ccc;}
+form input,form textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px}
+form button{padding:12px 20px;border:none;border-radius:5px;background:#2a5298;color:#fff;font-size:16px}
+footer{text-align:center;padding:20px;background:#111;color:#aaa}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px}
+.gallery img{width:100%;border-radius:10px}
 </style>
 </head>
 <body>
 
 <header>
-<img src="main_photo.jpg" alt="Keith">
+<img src="keith.jpg" alt="Keith Bryan Sugnot">
 <h1>Keith Bryan Sugnot</h1>
-<p>Event Singer • Live & Cover Songs</p>
+<h2>Event Singer • Live & Cover Songs</h2>
+<p>Professional event singer delivering heartfelt performances and popular cover songs.</p>
 </header>
 
 <section>
-<h2>🔥 Most Viewed Performance</h2>
-<div id="liveStatus">Loading...</div>
-<iframe id="ytPlayer" allowfullscreen></iframe>
+<h2>🔴 Live Performance</h2>
+<div id="liveStatus">Checking live status...</div>
+<iframe id="ytPlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+</section>
+
+<section>
+<h2>🌐 Connect with Keith Bryan Sugnot</h2>
+<div class="social-cards">
+
+  <!-- YouTube Card -->
+  <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card youtube">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="#FF0000">
+      <path d="M19.615 3.184c-1.034-.69-3.66-.705-5.615-.705s-4.581.015-5.615.705c-1.073.717-1.385 2.64-1.385 2.64s-.292 1.923-.292 3.848v2.656c0 1.925.292 3.848.292 3.848s.312 1.923 1.385 2.64c1.034.69 3.66.705 5.615.705s4.581-.015 5.615-.705c1.073-.717 1.385-2.64 1.385-2.64s.292-1.923.292-3.848v-2.656c0-1.925-.292-3.848-.292-3.848s-.312-1.923-1.385-2.64zM10 15.5v-7l6 3.5-6 3.5z"/>
+    </svg>
+    <div>
+      <h3>YouTube</h3>
+      <p>Subscribe for latest covers & performances</p>
+      <p>Subscribers: <span id="ytSubs">Loading...</span></p>
+    </div>
+  </a>
+
+  <!-- TikTok Card -->
+  <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card tiktok">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="#000000">
+      <path d="M12 2v17.5a4.5 4.5 0 1 1-4.5-4.5h3V7h3V2h3v5.5h3V2h-3z"/>
+    </svg>
+    <div>
+      <h3>TikTok</h3>
+      <p>Follow for clips & covers</p>
+      <p>Followers: <span id="ttCount">Loading...</span></p>
+    </div>
+  </a>
+
+  <!-- Facebook Card -->
+  <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card facebook">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="#1877F2">
+      <path d="M22 12a10 10 0 1 0-11.625 9.875v-6.987h-2.208V12h2.208V9.797c0-2.182 1.3-3.391 3.29-3.391.953 0 1.948.171 1.948.171v2.142h-1.099c-1.084 0-1.421.674-1.421 1.366V12h2.418l-.386 2.888h-2.032v6.987A10 10 0 0 0 22 12z"/>
+    </svg>
+    <div>
+      <h3>Facebook</h3>
+      <p>Watch live shows & updates</p>
+      <p>Followers: <span id="fbCount">Loading...</span></p>
+    </div>
+  </a>
+
+  <!-- Instagram Card -->
+  <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card instagram">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="#C13584">
+      <path d="M12 2.163c3.204 0 3.584.012 4.849.07 ..."/>
+    </svg>
+    <div>
+      <h3>Instagram</h3>
+      <p>Behind the scenes & photos</p>
+      <p>Followers: <span id="instaCount">Loading...</span></p>
+    </div>
+  </a>
+
+</div>
+</section>
+
+<section>
+<h2>💸 Support / Donation</h2>
+<p><strong>COMING SOON</strong></p>
+<p>GCash • Maya • QR Code will be available soon.</p>
+</section>
+
+<section>
+<h2>📩 Booking / Contact</h2>
+<p>Email: <strong>sugnotk@gmail.com</strong></p>
+<form action="https://formsubmit.co/sugnotk@gmail.com" method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="text" name="contact" placeholder="Contact Number" required>
+<input type="text" name="event" placeholder="Event Type">
+<textarea name="message" placeholder="Message"></textarea>
+<button type="submit">Send Inquiry</button>
+</form>
 </section>
 
 <section>
 <h2>🖼 Gallery</h2>
-<div class="gallery" id="gallery">
+<div class="gallery">
+<img src="keith.jpg">
 <img src="keith2.jpg">
 <img src="keith3.jpg">
-<img src="keith4.jpg">
 </div>
-</section>
-
-<section>
-<h2>🌐 Social Media</h2>
-<div class="social">
-<a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">YouTube</a>
-<a href="https://www.facebook.com" target="_blank">Facebook</a>
-<a href="https://www.instagram.com" target="_blank">Instagram</a>
-</div>
-</section>
-
-<section>
-<h2>📩 Booking</h2>
-<form action="https://formsubmit.co/sugnotk@gmail.com" method="POST">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="text" name="contact" placeholder="Contact Number" required>
-<textarea name="message" placeholder="Message"></textarea>
-<button type="submit">Send</button>
-</form>
 </section>
 
 <footer>
-© 2026 Keith Bryan Sugnot
+© 2026 Keith Bryan Sugnot. All rights reserved.
 </footer>
 
 <script>
-/* ===========================
-   🔥 YOUTUBE MOST VIEWED
-   WITH CACHE SYSTEM
-=========================== */
-
-const API_KEY = "AIzaSyCsn3Xvn8r9vMNn4GgxOU7PUb3xyTpEr6U";
+// ---------- YouTube Subscriber Count ----------
+const YT_API_KEY = "YOUR_YOUTUBE_API_KEY";
 const CHANNEL_ID = "UCefBEmdYeUm65g9LXWkTFrw";
-
-const ytPlayer = document.getElementById("ytPlayer");
-const liveStatusEl = document.getElementById("liveStatus");
-
-const CACHE_KEY = "ytMostViewedCache";
-const CACHE_DURATION = 6 * 60 * 60 * 1000;
-
-function loadCache(){
-    const cached = localStorage.getItem(CACHE_KEY);
-    if(!cached) return null;
-    const data = JSON.parse(cached);
-    if(Date.now() - data.time < CACHE_DURATION){
-        return data;
-    }
-    return null;
+const ytSubsEl = document.getElementById("ytSubs");
+async function updateYT(){
+    try{
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YT_API_KEY}`);
+        const data = await res.json();
+        ytSubsEl.innerText = parseInt(data.items[0].statistics.subscriberCount).toLocaleString();
+    }catch(e){ytSubsEl.innerText="N/A";console.log(e);}
 }
+updateYT(); setInterval(updateYT,120000);
 
-function saveCache(video){
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-        ...video,
-        time: Date.now()
-    }));
+// ---------- Facebook Followers ----------
+const fbCountEl = document.getElementById("fbCount");
+async function updateFB(){
+  try{
+    // Replace with Graph API fetch
+    fbCountEl.innerText="8.5k"; 
+  }catch(e){fbCountEl.innerText="N/A";}
 }
+updateFB(); setInterval(updateFB,300000);
 
-async function fetchMostViewed(){
-    const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=viewCount&maxResults=1&type=video`
-    );
-    const data = await res.json();
-    const video = data.items[0];
-    return {
-        id: video.id.videoId,
-        title: video.snippet.title
-    };
+// ---------- TikTok Followers (Unofficial JSON API) ----------
+const ttCountEl=document.getElementById("ttCount");
+async function updateTT(){
+  try{
+    const res=await fetch("https://www.tiktok.com/@kenken20.03"); // can use unofficial JSON endpoint
+    const html=await res.text();
+    const match=html.match(/"followerCount":(\d+)/);
+    ttCountEl.innerText=match?parseInt(match[1]).toLocaleString():"N/A";
+  }catch(e){ttCountEl.innerText="N/A";}
 }
+updateTT(); setInterval(updateTT,300000);
 
-async function initVideo(){
-    const cached = loadCache();
-
-    if(cached){
-        ytPlayer.src = "https://www.youtube.com/embed/" + cached.id;
-        liveStatusEl.innerHTML = cached.title;
-        fetchMostViewed().then(fresh => saveCache(fresh));
-    } else {
-        const fresh = await fetchMostViewed();
-        saveCache(fresh);
-        ytPlayer.src = "https://www.youtube.com/embed/" + fresh.id;
-        liveStatusEl.innerHTML = fresh.title;
-    }
+// ---------- Instagram Followers (Unofficial JSON API) ----------
+const instaCountEl=document.getElementById("instaCount");
+async function updateInsta(){
+  try{
+    const res=await fetch("https://www.instagram.com/kentotieeee/?__a=1");
+    const data=await res.json();
+    const followers=data.graphql.user.edge_followed_by.count;
+    instaCountEl.innerText=parseInt(followers).toLocaleString();
+  }catch(e){instaCountEl.innerText="N/A";}
 }
+updateInsta(); setInterval(updateInsta,300000);
 
-initVideo();
-
-/* ===========================
-   🖼 GALLERY SLIDESHOW
-=========================== */
-
-const images = document.querySelectorAll("#gallery img");
-let index = 0;
-if(images.length > 0){
-    images[0].classList.add("active");
-    setInterval(()=>{
-        images[index].classList.remove("active");
-        index = (index+1) % images.length;
-        images[index].classList.add("active");
-    },3000);
-}
-
-/* ===========================
-   🚀 SERVICE WORKER
-=========================== */
-
-if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('sw.js');
-}
+// ---------- YouTube Latest Video Embed ----------
+const ytPlayer=document.getElementById("ytPlayer");
+const liveStatus=document.getElementById("liveStatus");
+fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`)
+.then(res=>res.text())
+.then(data=>{
+  const videoId=data.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1]||"dQw4w9WgXcQ";
+  ytPlayer.src="https://www.youtube.com/embed/"+videoId;
+  liveStatus.innerText="Latest performance";
+});
 </script>
 
 </body>

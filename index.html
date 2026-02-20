@@ -44,17 +44,15 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
   <button onclick="showLive('facebook')">Facebook</button>
   <button onclick="showLive('tiktok')">TikTok</button>
 </div>
-
 <iframe id="livePlayer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+</section>
 
-<!-- Donation Section -->
-<div style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:10px; text-align:center;">
-  <h2>💸 Support / Donation</h2>
-  <p><strong>COMING SOON</strong></p>
-  <p>GCash • Maya • QR Code will be available soon.</p>
-</div>
+<section style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:10px; text-align:center;">
+<h2>💸 Support / Donation</h2>
+<p><strong>COMING SOON</strong></p>
+<p>GCash • Maya • QR Code will be available soon.</p>
+</section>
 
-<!-- Booking / Contact Form -->
 <section style="margin-top:20px;">
 <h2>📩 Booking / Contact</h2>
 <p>Email: <strong>sugnotk@gmail.com</strong></p>
@@ -67,7 +65,6 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 </form>
 </section>
 
-<!-- Gallery Section -->
 <section>
 <h2>🖼 Gallery</h2>
 <div class="gallery" id="gallery">
@@ -81,31 +78,49 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
 <section>
 <h2>🌐 Social Media</h2>
 <div class="social-cards">
-<!-- YouTube -->
+
+<!-- YouTube Official -->
 <a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank" class="card">
-  <svg viewBox="0 0 24 24" fill="#FF0000" width="50" height="50">
-    <path d="M10 15l5-3-5-3v6z"/><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.7-.8-2.1-.9C15.3 5 12 5 12 5h0s-3.3 0-6.9.1c-.4 0-1.3 0-2.1.9-.6.6-.8 2-.8 2S2 9.7 2 11.4v1.2c0 1.7.2 3.4.2 3.4s.2 1.4.8 2c.8.8 1.9.8 2.4.9 1.7.1 7.3.1 7.3.1s3.3 0 6.9-.1c.4 0 1.3 0 2.1-.9.6-.6.8-2 .8-2s.2-1.7.2-3.4v-1.2c0-1.7-.2-3.4-.2-3.4z"/>
+  <svg viewBox="0 0 24 24" width="50" height="50">
+    <rect width="24" height="24" rx="4" ry="4" fill="#FF0000"/>
+    <polygon points="9,8 16,12 9,16" fill="#fff"/>
   </svg>
-  <div><h3>YouTube</h3><p id="ytSubs">Subscribers</p></div>
+  <div>
+    <h3>YouTube</h3>
+    <p id="ytSubs">Loading...</p> <!-- Auto-update via API -->
+  </div>
 </a>
 
-<!-- TikTok -->
+<!-- TikTok Manual -->
 <a href="https://www.tiktok.com/@kenken20.03" target="_blank" class="card">
-  <svg viewBox="0 0 24 24" fill="#010101" width="50" height="50">
-    <path d="M12 2v16c-4-0.5-7-3-7-7 0-2 1-4 3-5v6h4V2h0z"/>
+  <svg viewBox="0 0 24 24" width="50" height="50">
+    <defs>
+      <linearGradient id="tiktokGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#69C9D0"/>
+        <stop offset="50%" stop-color="#EE1D52"/>
+        <stop offset="100%" stop-color="#000"/>
+      </linearGradient>
+    </defs>
+    <path d="M12 2v16c-4-0.5-7-3-7-7 0-2 1-4 3-5v6h4V2z" fill="url(#tiktokGrad)"/>
   </svg>
-  <div><h3>TikTok</h3><p id="ttFollowers">Followers</p></div>
+  <div>
+    <h3>TikTok</h3>
+    <p id="ttFollowers">8.5K Followers</p> <!-- Manual -->
+  </div>
 </a>
 
-<!-- Facebook -->
+<!-- Facebook Manual -->
 <a href="https://www.facebook.com/share/1CNAfgjuWL/" target="_blank" class="card">
   <svg viewBox="0 0 24 24" fill="#1877F2" width="50" height="50">
     <path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.5 9.9v-7h-2.5v-2.9h2.5v-2.2c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6v1.8h2.9l-.5 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/>
   </svg>
-  <div><h3>Facebook</h3><p id="fbFollowers">Followers</p></div>
+  <div>
+    <h3>Facebook</h3>
+    <p id="fbFollowers">12.3K Followers</p> <!-- Manual -->
+  </div>
 </a>
 
-<!-- Instagram -->
+<!-- Instagram Manual -->
 <a href="https://www.instagram.com/kentotieeee" target="_blank" class="card">
   <svg viewBox="0 0 24 24" width="50" height="50">
     <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -115,8 +130,12 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;}
     </linearGradient>
     <path fill="url(#instaGrad)" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z"/>
   </svg>
-  <div><h3>Instagram</h3><p id="igFollowers">Followers</p></div>
+  <div>
+    <h3>Instagram</h3>
+    <p id="igFollowers">15.2K Followers</p> <!-- Manual -->
+  </div>
 </a>
+
 </div>
 </section>
 

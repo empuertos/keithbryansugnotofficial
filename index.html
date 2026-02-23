@@ -97,30 +97,13 @@
             background-color: #1e3c72;
         }
 
-        /* Responsive video container */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Live Player */
+        #livePlayer {
             width: 100%;
-            height: 100%;
+            height: 400px;
             border: none;
             border-radius: 10px;
-            /* Added border-radius for consistency */
         }
-
 
         /* ---------- Donation Section ---------- */
         #donation {
@@ -154,10 +137,6 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-width: 500px;
-            /* Limit form width */
-            margin: 0 auto;
-            /* Center the form */
         }
 
         #booking input,
@@ -267,7 +246,6 @@
             color: #aaa;
             text-align: center;
             padding: 20px;
-            margin-top: 30px;
         }
 
         /* ---------- Media Queries ---------- */
@@ -285,6 +263,10 @@
                 font-size: 2em;
             }
 
+            #livePlayer {
+                height: 300px;
+            }
+
             .gallery-grid,
             .social-grid {
                 grid-template-columns: 1fr;
@@ -297,7 +279,7 @@
     <!-- ---------- Header Section ---------- -->
     <header>
         <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/keith1.jpg"
-            alt="Keith Bryan Sugnot Profile Picture" loading="lazy">
+            alt="Keith Bryan Sugnot" loading="lazy">
         <h1>Keith Bryan Sugnot</h1>
         <p>Event Singer • Live & Cover Songs</p>
     </header>
@@ -311,12 +293,8 @@
             <button onclick="showLive('facebook')">Facebook Live</button>
             <button onclick="showLive('tiktok')">TikTok Live</button>
         </div>
-        <div class="video-container">
-            <!-- Initial YouTube playlist is loaded by default -->
-            <iframe id="livePlayer"
-                src="https://www.youtube.com/embed/videoseries?list=PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j&autoplay=1&playsinline=1&modestbranding=1"
-                frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-        </div>
+        <iframe id="livePlayer" src="https://www.youtube.com/embed/QCl3w0yPnf8" frameborder="0"
+            allowfullscreen></iframe>
     </section>
 
     <!-- ---------- Donation Section ---------- -->
@@ -347,7 +325,7 @@
         <div class="gallery-grid">
             <div class="gallery-item">
                 <img src="https://raw.githubusercontent.com/empuertos/keithbryansugnotofficial/main/Keith2.jpg"
-                    alt="Keith Bryan Sugnot performing" loading="lazy">
+                    alt="Keith Bryan Sugnot" loading="lazy">
             </div>
             <!-- Add more gallery items here -->
         </div>
@@ -366,9 +344,15 @@
                 <p><a href="https://www.youtube.com/@keithbryansugnotofficial" target="_blank">View Channel</a></p>
             </div>
             <div class="social-card">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FE2C55">
-                    <path
-                        d="M16.002 0h-5.999c-2.76 0-5.003 2.242-5.003 5.002v13.998c0 2.76 2.243 5 5.003 5h5.999c2.76 0 5.003-2.24 5.003-5V5.002c0-2.76-2.243-5.002-5.003-5.002zm-3.001 17h-2.998v-2h2.998c1.656 0 3-1.343 3-3s-1.344-3-3-3h-2.998v-2h2.998c2.76 0 5 2.24 5 5s-2.24 5-5 5zM8.001 8c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-2 7h-2.001v-2h2.001c1.104 0 2-.896 2-2s-.896-2-2-2h-2.001v-2h2.001c2.209 0 4 1.791 4 4s-1.791 4-4 4z" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <defs>
+                        <linearGradient id="tiktokGrad" x1="0%" y1="0%" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#69C9D0" />
+                            <stop offset="50%" stop-color="#EE1D52" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 2v16c-4-0.5-7-3-7-7 0-2 1-4 3-5v6h4V2z" fill="url(#tiktokGrad)" />
+                    <path d="M17 6c-1 0-2 1-2 2v7h2V6z" fill="#fff" />
                 </svg>
                 <h3>TikTok</h3>
                 <p><a href="https://www.tiktok.com/@kenken20.03" target="_blank">Follow</a></p>
@@ -389,3 +373,42 @@
                         <stop offset="100%" stop-color="#515BD4" />
                     </linearGradient>
                     <path fill="url(#instaGrad)"
+                        d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm3.5-3.5a1 1 0 11-2 0 1 1 0 012 0z" />
+                </svg>
+                <h3>Instagram</h3>
+                <p><a href="https://www.instagram.com/kentotieeee" target="_blank">Follow</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------- Footer ---------- -->
+    <footer>
+        © 2026 Keith Bryan Sugnot. All rights reserved.
+    </footer>
+
+    <script>
+        function showLive(platform) {
+            const livePlayer = document.getElementById('livePlayer');
+            switch (platform) {
+                case 'youtube':
+                    livePlayer.src = 'https://www.youtube.com/embed/QCl3w0yPnf8';
+                    break;
+                case 'playlist':
+                    livePlayer.src =
+                        'https://www.youtube.com/embed/videoseries?list=PLZYuanMBfLb2Juvbb_jcjkX0PtG5avx8j&autoplay=1&playsinline=1&modestbranding=1';
+                    break;
+                case 'facebook':
+                    livePlayer.src =
+                        'https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/watch/?v=918305063889356&show_text=0&width=560';
+                    break;
+                case 'tiktok':
+                    window.open('https://www.tiktok.com/@kenken20.03', '_blank');
+                    break;
+                default:
+                    livePlayer.src = 'https://www.youtube.com/embed/QCl3w0yPnf8';
+            }
+        }
+    </script>
+</body>
+
+</html>

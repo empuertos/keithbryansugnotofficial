@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Superadmin</title>
+    <style>
+        body { font-family: sans-serif; max-width: 480px; margin: 20px auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; }
+        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:active { background: #1d4ed8; }
+        #result { margin-top: 20px; padding: 12px; border-radius: 6px; background: #f3f4f6; white-space: pre-wrap; word-break: break-all; display: none; }
+        .success { background: #dcfce7; color: #166534; }
+        .error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <h1>👑 Create Superadmin</h1>
+    <p style="color:#666; font-size:14px; margin-bottom:20px;">Gawin ito nang <strong>isang beses lang</strong>.</p>
+
+    <div class="form-group">
+        <label for="worker-url">Worker URL</label>
+        <input type="url" id="worker-url" placeholder="https://xxx.workers.dev">
+    </div>
+
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="halimbawa: admin" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password (min 6 characters)</label>
+        <input type="password" id="password" placeholder="malakas na password" required>
+    </div>
+
+    <button onclick="createSuperadmin()">👤 Create Superadmin</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function createSuperadmin() {
+            const baseUrl = document.getElementById('worker-url').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+
+            resultDiv.style.display = 'none';
+            resultDiv.className = '';
+
+            if (!baseUrl || !username || password.length < 6) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'error';
+                resultDiv.textContent = '❌ Ilagay ang tamang URL, username, at password (min 6 characters)';
+                return;
+            }
+
+            const endpoint = baseUrl + '/auth/register-first-superadmin';
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+
+                if (response.ok && data.success) {
+                    resultDiv.className = 'success';
+                    resultDiv.textContent += '\n\n✅ Success! Superadmin created na! Ngayon pwede ka nang mag-login.';
+                } else {
+                    resultDiv.className = 'error';
+                }
+
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'error';
+                resultDiv.textContent = '❌ Error: ' + error.message + '\n\nSiguraduhin na:\n1. Tama ang Worker URL\n2. Naka-deploy na ang code\n3. Naka-set na ang JWT_SECRET';
+            }
+        }
+    </script>
+</body>
+</html>
